@@ -159,6 +159,168 @@ nav{width:100%;display:flex;overflow:auto}
 Built with love by the ReVogue Team — data stored locally (localStorage). </footer>
 </div>
 
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ReVogue — SECOND HAND. FIRST CHOICE.</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+/* NEW GREEN AESTHETIC THEME */
+--bg:#081a17; 
+--card:#10211d;
+--muted:#b2c3be;
+--accent:#5cc4a8; /* Primary Green/Teal */
+--accent-2:#73e8bf; /* Lighter Accent */
+--glass: rgba(255,255,255,0.03);
+--glass-2: rgba(255,255,255,0.02);
+--success:#66e07f;
+--danger:#ff7a7a;
+--radius:12px;
+--max-width:1200px;
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+background: linear-gradient(180deg, #071513 0%, var(--bg) 100%);
+color:#eaf6f7;font-family:Inter,system-ui,Arial;
+-webkit-font-smoothing:antialiased;
+padding:28px;
+display:flex;justify-content:center;
+}
+.app{width:100%;max-width:var(--max-width)}
+header{
+display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
+}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{
+width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+display:flex;align-items:center;justify-content:center;font-weight:800;color:#031310;font-family:Lora;font-size:20px;transform:rotate(-8deg);
+box-shadow:0 8px 30px rgba(92,196,168,0.08);
+}
+.brand .title{line-height:1}
+.brand h1{margin:0;font-size:18px}
+.brand p{margin:0;font-size:12px;color:var(--muted)}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
+nav a.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#031310}
+.controls{display:flex;gap:8px;align-items:center}
+.btn{
+background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--accent-2);cursor:pointer;font-weight:700;
+}
+.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#031310;border:none}
+main{display:block;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); padding:20px;border-radius:14px;box-shadow:0 10px 40px rgba(5,10,16,0.6)}
+.container{max-width:var(--max-width);margin:0 auto}
+.grid{display:grid;gap:16px}
+.grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.grid.cols-2{grid-template-columns:repeat(2,1fr)}
+.card{
+background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));
+padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
+}
+.product-img{width:100%;height:180px;border-radius:10px;background-size:cover;background-position:center;margin-bottom:10px}
+.muted{color:var(--muted);font-size:13px}
+.small{font-size:13px;color:var(--muted)}
+.price{font-weight:800;font-size:18px}
+.life-meter{height:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:8px;overflow:hidden;margin-top:8px}
+.life-meter > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:40%}
+.flex{display:flex;gap:8px;align-items:center}
+.space-between{display:flex;justify-content:space-between;align-items:center}
+form label{display:block;font-size:13px;margin:8px 0 6px;color:var(--muted)}
+input[type="text"], input[type="number"], textarea, select{
+width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;font-size:14px;
+}
+.hint{font-size:12px;color:var(--muted)}
+footer{margin-top:20px;color:var(--muted);font-size:13px;text-align:center}
+
+/* responsive */
+@media (max-width:900px){
+.grid.cols-3{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:580px){
+header{flex-direction:column;align-items:flex-start}
+.grid.cols-3{grid-template-columns:1fr}
+nav{width:100%;display:flex;overflow:auto}
+}
+
+/* small UI niceties */
+.badge{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;color:var(--muted);font-weight:700}
+.kpi{display:flex;gap:12px;align-items:center}
+.kpi .val{font-weight:800;font-size:18px}
+.center{display:flex;align-items:center;justify-content:center}
+.pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700}
+.community-post img{width:48px;height:48px;border-radius:8px;object-fit:cover}
+.tips-list li{margin:8px 0}
+.search{display:flex;gap:8px}
+.chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700;color:var(--muted)}
+.secondary{background:transparent;border:1px dashed rgba(255,255,255,0.03)}
+.form-row{display:flex;gap:8px}
+.form-row > *{flex:1}
+.small-muted{font-size:12px;color:var(--muted)}
+.linkish{color:var(--accent-2);cursor:pointer;text-decoration:underline}
+
+/* Refurbish Tracker */
+.tracker-container{display:flex;justify-content:space-between;margin-top:10px;position:relative;padding-top:20px;}
+.tracker-step{width:25%;text-align:center;position:relative}
+.tracker-dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.1);border:3px solid var(--card);position:absolute;top:0;left:50%;transform:translate(-50%,-50%);}
+.tracker-step.active .tracker-dot{background:var(--accent)}
+.tracker-step-title{font-size:11px;color:var(--muted);margin-top:10px;position:absolute;width:100%;left:0;font-weight:700}
+.tracker-line{height:3px;background:rgba(255,255,255,0.1);position:absolute;top:3px;left:0;right:0;z-index:-1;}
+.tracker-progress{height:3px;background:var(--accent);position:absolute;top:3px;left:0;z-index:-1;width:0}
+
+/* Goal Progress Bar */
+.goal-bar{height:10px;background:var(--glass-2);border-radius:5px;margin-top:4px}
+.goal-progress{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent-2));border-radius:5px;}
+
+/* Modal Styling */
+#modalOverlay{
+    position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
+}
+#modalOverlay .modal-content{
+    max-width:600px;width:100%;
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="brand">
+<div class="logo">Rv</div>
+<div class="title">
+<h1>ReVogue</h1>
+<p class="muted">SECOND HAND. FIRST CHOICE.</p>
+</div>
+</div>
+
+<nav id="navlinks">
+<a href="#home" data-route="home" class="active">Home</a>
+<a href="#shop" data-route="shop">Shop</a>
+<a href="#wardrobe" data-route="wardrobe">Wardrobe</a>
+<a href="#rebox" data-route="rebox">ReBox</a>
+<a href="#dashboard" data-route="dashboard">Dashboard</a>
+<a href="#redeem" data-route="redeem">Redeem ⭐</a>
+<a href="#community" data-route="community">ReCommunity</a>
+<a href="#tips" data-route="tips">Tips</a>
+<a href="#about" data-route="about">About</a>
+</nav>
+
+<div class="controls">
+<div class="chip">⭐ RePoints: <strong id="rePointsCount">${loadData().rePoints || 0}</strong></div>
+<button class="btn" id="seedBtn" title="Reset all data">Reset</button>
+<button class="btn primary" id="newItemBtn">+ Add Closet Item</button>
+</div>
+</header>
+
+<main id="appMain" class="container">
+</main>
+
+<footer>
+Built with love by the ReVogue Team — data stored locally (localStorage). </footer>
+</div>
+
 <script>
 /* -------------------------
 App: data + routing + render
@@ -1102,4 +1264,10 @@ render();
 </script>
 </body>
 </html>
+
+
+
+</body>
+</html>
+
 
