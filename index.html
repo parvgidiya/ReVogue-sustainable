@@ -288,7 +288,6 @@ function render() {
 
     // Ensure the current route is valid, default to home
     const currentRoute = ROUTES.includes(route) ? route : 'home';
-    routeTo(currentRoute); // Reroute to ensure URL/Nav match
 
     appMain.innerHTML = '';
     
@@ -923,5 +922,6 @@ render();
 </script>
 </body>
 </html>
+
 
 
