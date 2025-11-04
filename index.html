@@ -166,16 +166,16 @@ App: data + routing + render
 
 const ROUTES = ['home','shop','wardrobe','rebox','dashboard','redeem','community','tips','about'];
 const sampleProducts = [
-{id: 'p1', title: 'Vintage Denim Jacket', price: 85, img: '/ReVogue-sustainable/assets/images/denim_jacket.jpg', life: 65, cycles: 18, fabric: 'Organic cotton denim. Washed in low-impact process. Origin: Turkey.', saved_water_liters: 1200, co2_saved_kg: 18, care:'Machine wash cold, delicate cycle. Air dry to maintain shape. Avoid bleach.'},
-{id: 'p2', title: 'Hand-dyed Silk Blouse', price: 40, img: '/ReVogue-sustainable/assets/images/silk_blouse.jpg', life: 30, cycles: 6, fabric: 'Mulberry silk. Artisan-dyed in India. Low-waste dyeing.', saved_water_liters: 250, co2_saved_kg: 3.8, care:'Hand wash only in cold water with mild detergent. Lay flat to dry. Do not wring.'},
-{id: 'p3', title: 'Reworked Cotton Trousers', price: 90, img: '/ReVogue-sustainable/assets/images/cotton_trousers.jpg', life: 85, cycles: 32, fabric: 'Recycled cotton panels. Honest craftsmanship.', saved_water_liters: 3000, co2_saved_kg: 42, care:'Machine wash warm. Tumble dry medium. Iron inside out.'},
-{id: 'p4', title: 'Chunky Knit Cardigan', price: 55, img: '/ReVogue-sustainable/assets/images/chunky_cardigan.jpg', life: 50, cycles: 12, fabric: 'Blend: organic wool & recycled fibers. Made in Portugal.', saved_water_liters: 900, co2_saved_kg: 12, care:'Hand wash or dry clean. Store folded (do not hang). Treat pilling gently with a sweater comb.'},
-{id: 'p5', title: 'Upcycled Patchwork Skirt', price: 70, img: '/ReVogue-sustainable/assets/images/patchwork_skirt.jpg', life: 40, cycles: 8, fabric: 'Mixed cotton scraps, fully traceable.', saved_water_liters: 600, co2_saved_kg: 8, care:'Gentle machine wash, low spin. Iron on low setting.'},
-{id: 'p6', title: 'Bamboo T-Shirt (Grey)', price: 30, img: '/ReVogue-sustainable/assets/images/bamboo_tshirt.jpg', life: 75, cycles: 25, fabric: '100% Organic Bamboo Viscose.', saved_water_liters: 400, co2_saved_kg: 5, care:'Wash on cold. Tumble dry low or hang dry. Bamboo fibers are naturally anti-bacterial.'},
-{id: 'p7', title: 'Linen Maxi Dress (Natural)', price: 110, img: '/ReVogue-sustainable/assets/images/linen_dress.jpg', life: 90, cycles: 40, fabric: 'European Flax Linen, highly durable.', saved_water_liters: 1500, co2_saved_kg: 20, care:'Linen softens with washing. Wash on delicate. Do not over-dry. Accept the wrinkles!'},
-{id: 'p8', title: 'Organic Cotton Hoodie', price: 95, img: '/ReVogue-sustainable/assets/images/cotton_hoodie.jpg', life: 95, cycles: 50, fabric: 'GOTS certified Organic Cotton.', saved_water_liters: 300, co2_saved_kg: 4, care:'Machine wash cold with like colours. Hang to dry to minimize shrinkage.'},
-{id: 'p9', title: 'Recycled Cashmere Sweater', price: 180, img: '/ReVogue-sustainable/assets/images/cashmere_sweater.jpg', life: 60, cycles: 15, fabric: '100% Recycled Cashmere.', saved_water_liters: 800, co2_saved_kg: 15, care:'Hand wash cold with wool/cashmere detergent. Lay flat away from sunlight to dry.'},
-{id: 'p10', title: 'Recycled Fiber T-Shirt', price: 35, img: '/ReVogue-sustainable/assets/images/recycled_tshirt.jpg', life: 70, cycles: 28, fabric: '50% recycled cotton, 50% recycled PET.', saved_water_liters: 1800, co2_saved_kg: 25, care:'Wash on cold, gentle cycle. Avoid fabric softeners.'},
+{id: 'p1', title: 'Vintage Denim Jacket', price: 85, img: '/ReVogue-sustainable/assets/images/denim_jacket.jpg?v=3', life: 65, cycles: 18, fabric: 'Organic cotton denim. Washed in low-impact process. Origin: Turkey.', saved_water_liters: 1200, co2_saved_kg: 18, care:'Machine wash cold, delicate cycle. Air dry to maintain shape. Avoid bleach.'},
+{id: 'p2', title: 'Hand-dyed Silk Blouse', price: 40, img: '/ReVogue-sustainable/assets/images/silk_blouse.jpg?v=3', life: 30, cycles: 6, fabric: 'Mulberry silk. Artisan-dyed in India. Low-waste dyeing.', saved_water_liters: 250, co2_saved_kg: 3.8, care:'Hand wash only in cold water with mild detergent. Lay flat to dry. Do not wring.'},
+{id: 'p3', title: 'Reworked Cotton Trousers', price: 90, img: '/ReVogue-sustainable/assets/images/cotton_trousers.jpg?v=3', life: 85, cycles: 32, fabric: 'Recycled cotton panels. Honest craftsmanship.', saved_water_liters: 3000, co2_saved_kg: 42, care:'Machine wash warm. Tumble dry medium. Iron inside out.'},
+{id: 'p4', title: 'Chunky Knit Cardigan', price: 55, img: '/ReVogue-sustainable/assets/images/chunky_cardigan.jpg?v=3', life: 50, cycles: 12, fabric: 'Blend: organic wool & recycled fibers. Made in Portugal.', saved_water_liters: 900, co2_saved_kg: 12, care:'Hand wash or dry clean. Store folded (do not hang). Treat pilling gently with a sweater comb.'},
+{id: 'p5', title: 'Upcycled Patchwork Skirt', price: 70, img: '/ReVogue-sustainable/assets/images/patchwork_skirt.jpg?v=3', life: 40, cycles: 8, fabric: 'Mixed cotton scraps, fully traceable.', saved_water_liters: 600, co2_saved_kg: 8, care:'Gentle machine wash, low spin. Iron on low setting.'},
+{id: 'p6', title: 'Bamboo T-Shirt (Grey)', price: 30, img: '/ReVogue-sustainable/assets/images/bamboo_tshirt.jpg?v=3', life: 75, cycles: 25, fabric: '100% Organic Bamboo Viscose.', saved_water_liters: 400, co2_saved_kg: 5, care:'Wash on cold. Tumble dry low or hang dry. Bamboo fibers are naturally anti-bacterial.'},
+{id: 'p7', title: 'Linen Maxi Dress (Natural)', price: 110, img: '/ReVogue-sustainable/assets/images/linen_dress.jpg?v=3', life: 90, cycles: 40, fabric: 'European Flax Linen, highly durable.', saved_water_liters: 1500, co2_saved_kg: 20, care:'Linen softens with washing. Wash on delicate. Do not over-dry. Accept the wrinkles!'},
+{id: 'p8', title: 'Organic Cotton Hoodie', price: 95, img: '/ReVogue-sustainable/assets/images/cotton_hoodie.jpg?v=3', life: 95, cycles: 50, fabric: 'GOTS certified Organic Cotton.', saved_water_liters: 300, co2_saved_kg: 4, care:'Machine wash cold with like colours. Hang to dry to minimize shrinkage.'},
+{id: 'p9', title: 'Recycled Cashmere Sweater', price: 180, img: '/ReVogue-sustainable/assets/images/cashmere_sweater.jpg?v=3', life: 60, cycles: 15, fabric: '100% Recycled Cashmere.', saved_water_liters: 800, co2_saved_kg: 15, care:'Hand wash cold with wool/cashmere detergent. Lay flat away from sunlight to dry.'},
+{id: 'p10', title: 'Recycled Fiber T-Shirt', price: 35, img: '/ReVogue-sustainable/assets/images/recycled_tshirt.jpg?v=3', life: 70, cycles: 28, fabric: '50% recycled cotton, 50% recycled PET.', saved_water_liters: 1800, co2_saved_kg: 25, care:'Wash on cold, gentle cycle. Avoid fabric softeners.'},
 ];
 
 const REBOX_TIERS = [
@@ -1102,6 +1102,7 @@ render();
 </script>
 </body>
 </html>
+
 
 
 
