@@ -159,1087 +159,746 @@ nav{width:100%;display:flex;overflow:auto}
 Built with love by the ReVogue Team — data stored locally (localStorage). </footer>
 </div>
 
-
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>ReVogue — SECOND HAND. FIRST CHOICE.</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-<style>
-:root{
-/* NEW GREEN AESTHETIC THEME */
---bg:#081a17; 
---card:#10211d;
---muted:#b2c3be;
---accent:#5cc4a8; /* Primary Green/Teal */
---accent-2:#73e8bf; /* Lighter Accent */
---glass: rgba(255,255,255,0.03);
---glass-2: rgba(255,255,255,0.02);
---success:#66e07f;
---danger:#ff7a7a;
---radius:12px;
---max-width:1200px;
-}
-*{box-sizing:border-box}
-body{
-margin:0;
-background: linear-gradient(180deg, #071513 0%, var(--bg) 100%);
-color:#eaf6f7;font-family:Inter,system-ui,Arial;
--webkit-font-smoothing:antialiased;
-padding:28px;
-display:flex;justify-content:center;
-}
-.app{width:100%;max-width:var(--max-width)}
-header{
-display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;
-}
-.brand{display:flex;gap:12px;align-items:center}
-.logo{
-width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
-display:flex;align-items:center;justify-content:center;font-weight:800;color:#031310;font-family:Lora;font-size:20px;transform:rotate(-8deg);
-box-shadow:0 8px 30px rgba(92,196,168,0.08);
-}
-.brand .title{line-height:1}
-.brand h1{margin:0;font-size:18px}
-.brand p{margin:0;font-size:12px;color:var(--muted)}
-nav{display:flex;gap:8px;flex-wrap:wrap}
-nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600}
-nav a.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#031310}
-.controls{display:flex;gap:8px;align-items:center}
-.btn{
-background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--accent-2);cursor:pointer;font-weight:700;
-}
-.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#031310;border:none}
-main{display:block;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00)); padding:20px;border-radius:14px;box-shadow:0 10px 40px rgba(5,10,16,0.6)}
-.container{max-width:var(--max-width);margin:0 auto}
-.grid{display:grid;gap:16px}
-.grid.cols-3{grid-template-columns:repeat(3,1fr)}
-.grid.cols-2{grid-template-columns:repeat(2,1fr)}
-.card{
-background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.01));
-padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
-}
-.product-img{width:100%;height:180px;border-radius:10px;background-size:cover;background-position:center;margin-bottom:10px}
-.muted{color:var(--muted);font-size:13px}
-.small{font-size:13px;color:var(--muted)}
-.price{font-weight:800;font-size:18px}
-.life-meter{height:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:8px;overflow:hidden;margin-top:8px}
-.life-meter > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:40%}
-.flex{display:flex;gap:8px;align-items:center}
-.space-between{display:flex;justify-content:space-between;align-items:center}
-form label{display:block;font-size:13px;margin:8px 0 6px;color:var(--muted)}
-input[type="text"], input[type="number"], textarea, select{
-width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit;font-size:14px;
-}
-.hint{font-size:12px;color:var(--muted)}
-footer{margin-top:20px;color:var(--muted);font-size:13px;text-align:center}
-
-/* responsive */
-@media (max-width:900px){
-.grid.cols-3{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:580px){
-header{flex-direction:column;align-items:flex-start}
-.grid.cols-3{grid-template-columns:1fr}
-nav{width:100%;display:flex;overflow:auto}
-}
-
-/* small UI niceties */
-.badge{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;color:var(--muted);font-weight:700}
-.kpi{display:flex;gap:12px;align-items:center}
-.kpi .val{font-weight:800;font-size:18px}
-.center{display:flex;align-items:center;justify-content:center}
-.pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700}
-.community-post img{width:48px;height:48px;border-radius:8px;object-fit:cover}
-.tips-list li{margin:8px 0}
-.search{display:flex;gap:8px}
-.chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);font-weight:700;color:var(--muted)}
-.secondary{background:transparent;border:1px dashed rgba(255,255,255,0.03)}
-.form-row{display:flex;gap:8px}
-.form-row > *{flex:1}
-.small-muted{font-size:12px;color:var(--muted)}
-.linkish{color:var(--accent-2);cursor:pointer;text-decoration:underline}
-
-/* Refurbish Tracker */
-.tracker-container{display:flex;justify-content:space-between;margin-top:10px;position:relative;padding-top:20px;}
-.tracker-step{width:25%;text-align:center;position:relative}
-.tracker-dot{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.1);border:3px solid var(--card);position:absolute;top:0;left:50%;transform:translate(-50%,-50%);}
-.tracker-step.active .tracker-dot{background:var(--accent)}
-.tracker-step-title{font-size:11px;color:var(--muted);margin-top:10px;position:absolute;width:100%;left:0;font-weight:700}
-.tracker-line{height:3px;background:rgba(255,255,255,0.1);position:absolute;top:3px;left:0;right:0;z-index:-1;}
-.tracker-progress{height:3px;background:var(--accent);position:absolute;top:3px;left:0;z-index:-1;width:0}
-
-/* Goal Progress Bar */
-.goal-bar{height:10px;background:var(--glass-2);border-radius:5px;margin-top:4px}
-.goal-progress{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent-2));border-radius:5px;}
-
-/* Modal Styling */
-#modalOverlay{
-    position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
-}
-#modalOverlay .modal-content{
-    max-width:600px;width:100%;
-}
-</style>
-</head>
-<body>
-<div class="app">
-<header>
-<div class="brand">
-<div class="logo">Rv</div>
-<div class="title">
-<h1>ReVogue</h1>
-<p class="muted">SECOND HAND. FIRST CHOICE.</p>
-</div>
-</div>
-
-<nav id="navlinks">
-<a href="#home" data-route="home" class="active">Home</a>
-<a href="#shop" data-route="shop">Shop</a>
-<a href="#wardrobe" data-route="wardrobe">Wardrobe</a>
-<a href="#rebox" data-route="rebox">ReBox</a>
-<a href="#dashboard" data-route="dashboard">Dashboard</a>
-<a href="#redeem" data-route="redeem">Redeem ⭐</a>
-<a href="#community" data-route="community">ReCommunity</a>
-<a href="#tips" data-route="tips">Tips</a>
-<a href="#about" data-route="about">About</a>
-</nav>
-
-<div class="controls">
-<div class="chip">⭐ RePoints: <strong id="rePointsCount">${loadData().rePoints || 0}</strong></div>
-<button class="btn" id="seedBtn" title="Reset all data">Reset</button>
-<button class="btn primary" id="newItemBtn">+ Add Closet Item</button>
-</div>
-</header>
-
-<main id="appMain" class="container">
-</main>
-
-<footer>
-Built with love by the ReVogue Team — data stored locally (localStorage). </footer>
-</div>
-
 <script>
 /* -------------------------
 App: data + routing + render
 -------------------------*/
 
+// Repository name prefix for GitHub Pages: /ReVogue-sustainable/
+
 const ROUTES = ['home','shop','wardrobe','rebox','dashboard','redeem','community','tips','about'];
+// FIXED: All local image paths now correctly use the /ReVogue-sustainable/assets/images/ prefix.
 const sampleProducts = [
-{id: 'p1', title: 'Vintage Denim Jacket', price: 85, img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687', life: 65, cycles: 18, fabric: 'Organic cotton denim. Washed in low-impact process. Origin: Turkey.', saved_water_liters: 1200, co2_saved_kg: 18, care:'Machine wash cold, delicate cycle. Air dry to maintain shape. Avoid bleach.'},
-{id: 'p2', title: 'Hand-dyed Silk Blouse', price: 40, img: 'https://images.unsplash.com/photo-1596752763328-b9a3f2c53f3e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 30, cycles: 6, fabric: 'Mulberry silk. Artisan-dyed in India. Low-waste dyeing.', saved_water_liters: 250, co2_saved_kg: 3.8, care:'Hand wash only in cold water with mild detergent. Lay flat to dry. Do not wring.'},
-{id: 'p3', title: 'Reworked Cotton Trousers', price: 90, img: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 85, cycles: 32, fabric: 'Recycled cotton panels. Honest craftsmanship.', saved_water_liters: 3000, co2_saved_kg: 42, care:'Machine wash warm. Tumble dry medium. Iron inside out.'},
-{id: 'p4', title: 'Chunky Knit Cardigan', price: 55, img: 'https://images.unsplash.com/photo-1608688460676-0f8c37d0c3f0?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 50, cycles: 12, fabric: 'Blend: organic wool & recycled fibers. Made in Portugal.', saved_water_liters: 900, co2_saved_kg: 12, care:'Hand wash or dry clean. Store folded (do not hang). Treat pilling gently with a sweater comb.'},
-{id: 'p5', title: 'Upcycled Patchwork Skirt', price: 70, img: 'https://images.unsplash.com/photo-1596707323204-629a997d519d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 40, cycles: 8, fabric: 'Mixed cotton scraps, fully traceable.', saved_water_liters: 600, co2_saved_kg: 8, care:'Gentle machine wash, low spin. Iron on low setting.'},
-{id: 'p6', title: 'Bamboo T-Shirt (Grey)', price: 30, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 75, cycles: 25, fabric: '100% Organic Bamboo Viscose.', saved_water_liters: 400, co2_saved_kg: 5, care:'Wash on cold. Tumble dry low or hang dry. Bamboo fibers are naturally anti-bacterial.'},
-{id: 'p7', title: 'Linen Maxi Dress (Natural)', price: 110, img: 'https://images.unsplash.com/photo-1563836374028-2b8969317528?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 90, cycles: 40, fabric: 'European Flax Linen, highly durable.', saved_water_liters: 1500, co2_saved_kg: 20, care:'Linen softens with washing. Wash on delicate. Do not over-dry. Accept the wrinkles!'},
-{id: 'p8', title: 'Organic Cotton Hoodie', price: 95, img: 'https://images.unsplash.com/photo-1578351717316-6c16723f66c1?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 95, cycles: 50, fabric: 'GOTS certified Organic Cotton.', saved_water_liters: 300, co2_saved_kg: 4, care:'Machine wash cold with like colours. Hang to dry to minimize shrinkage.'},
-{id: 'p9', title: 'Recycled Cashmere Sweater', price: 180, img: 'https://images.unsplash.com/photo-1596752763328-b9a3f2c53f3e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 60, cycles: 15, fabric: '100% Recycled Cashmere.', saved_water_liters: 800, co2_saved_kg: 15, care:'Hand wash cold with wool/cashmere detergent. Lay flat away from sunlight to dry.'},
-{id: 'p10', title: 'Recycled Fiber T-Shirt', price: 35, img: 'https://images.unsplash.com/photo-1588820087794-d2e1b1248a3d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', life: 70, cycles: 28, fabric: '50% recycled cotton, 50% recycled PET.', saved_water_liters: 1800, co2_saved_kg: 25, care:'Wash on cold, gentle cycle. Avoid fabric softeners.'},
+{id: 'p1', title: 'Vintage Denim Jacket', price: 85, img: '/ReVogue-sustainable/assets/images/denim_jacket.jpg', life: 65, cycles: 18, fabric: 'Organic cotton denim. Washed in low-impact process. Origin: Turkey.', saved_water_liters: 1200, co2_saved_kg: 18, care:'Machine wash cold, delicate cycle. Air dry to maintain shape. Avoid bleach.'},
+{id: 'p2', title: 'Hand-dyed Silk Blouse', price: 40, img: '/ReVogue-sustainable/assets/images/silk_blouse.jpg', life: 30, cycles: 6, fabric: 'Mulberry silk. Artisan-dyed in India. Low-waste dyeing.', saved_water_liters: 250, co2_saved_kg: 3.8, care:'Hand wash only in cold water with mild detergent. Lay flat to dry. Do not wring.'},
+{id: 'p3', title: 'Reworked Cotton Trousers', price: 90, img: '/ReVogue-sustainable/assets/images/cotton_trousers.jpg', life: 85, cycles: 32, fabric: 'Recycled cotton panels. Honest craftsmanship.', saved_water_liters: 3000, co2_saved_kg: 42, care:'Machine wash warm. Tumble dry medium. Iron inside out.'},
+{id: 'p4', title: 'Chunky Knit Cardigan', price: 55, img: '/ReVogue-sustainable/assets/images/chunky_cardigan.jpg', life: 50, cycles: 12, fabric: 'Blend: organic wool & recycled fibers. Made in Portugal.', saved_water_liters: 900, co2_saved_kg: 12, care:'Hand wash or dry clean. Store folded (do not hang). Treat pilling gently with a sweater comb.'},
+{id: 'p5', title: 'Upcycled Patchwork Skirt', price: 70, img: '/ReVogue-sustainable/assets/images/patchwork_skirt.jpg', life: 40, cycles: 8, fabric: 'Mixed cotton scraps, fully traceable.', saved_water_liters: 600, co2_saved_kg: 8, care:'Gentle machine wash, low spin. Iron on low setting.'},
+{id: 'p6', title: 'Bamboo T-Shirt (Grey)', price: 30, img: '/ReVogue-sustainable/assets/images/bamboo_tshirt.jpg', life: 75, cycles: 25, fabric: '100% Organic Bamboo Viscose.', saved_water_liters: 400, co2_saved_kg: 5, care:'Wash on cold. Tumble dry low or hang dry. Bamboo fibers are naturally anti-bacterial.'},
+{id: 'p7', title: 'Linen Maxi Dress (Natural)', price: 110, img: '/ReVogue-sustainable/assets/images/linen_dress.jpg', life: 90, cycles: 40, fabric: 'European Flax Linen, highly durable.', saved_water_liters: 1500, co2_saved_kg: 20, care:'Linen softens with washing. Wash on delicate. Do not over-dry. Accept the wrinkles!'},
+{id: 'p8', title: 'Organic Cotton Hoodie', price: 95, img: '/ReVogue-sustainable/assets/images/cotton_hoodie.jpg', life: 95, cycles: 50, fabric: 'GOTS certified Organic Cotton.', saved_water_liters: 300, co2_saved_kg: 4, care:'Machine wash cold with like colours. Hang to dry to minimize shrinkage.'},
+{id: 'p9', title: 'Recycled Cashmere Sweater', price: 180, img: '/ReVogue-sustainable/assets/images/cashmere_sweater.jpg', life: 60, cycles: 15, fabric: '100% Recycled Cashmere.', saved_water_liters: 800, co2_saved_kg: 15, care:'Hand wash cold with wool/cashmere detergent. Lay flat away from sunlight to dry.'},
+{id: 'p10', title: 'Recycled Fiber T-Shirt', price: 35, img: '/ReVogue-sustainable/assets/images/recycled_tshirt.jpg', life: 70, cycles: 28, fabric: '50% recycled cotton, 50% recycled PET.', saved_water_liters: 1800, co2_saved_kg: 25, care:'Wash on cold, gentle cycle. Avoid fabric softeners.'},
 ];
 
 const REBOX_TIERS = [
-    {id:'rb1', title:'Monthly ReBox', price:45, frequency:'Monthly', points:50, img:'https://images.unsplash.com/photo-1520038410233-a3d13550e502?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', note:'Curated selection of items ready for sale/upcycle.'},
-    {id:'rb2', title:'Quarterly ReBox', price:120, frequency:'Quarterly', points:150, img:'https://images.unsplash.com/photo-1601334927233-a3d13550e502?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', note:'Larger collection, includes premium refurbish vouchers.'},
-    {id:'rb3', title:'Yearly ReBox', price:450, frequency:'Yearly', points:500, img:'https://images.unsplash.com/photo-1612450849610-d9225c56d252?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', note:'Best value, priority service, and biggest impact.'},
+ // FIXED: ReBox image path corrected (assuming 'rebox.jpg' is used for all)
+ {id:'rb1', title:'Monthly ReBox', price:45, frequency:'Monthly', points:50, img:'/ReVogue-sustainable/assets/images/rebox.jpg', note:'Curated selection of items ready for sale/upcycle.'},
+ {id:'rb2', title:'Quarterly ReBox', price:120, frequency:'Quarterly', points:150, img:'/ReVogue-sustainable/assets/images/rebox.jpg', note:'Curated selection of items ready for sale/upcycle.'},
+ {id:'rb3', title:'Yearly ReBox', price:450, frequency:'Yearly', points:600, img:'/ReVogue-sustainable/assets/images/rebox.jpg', note:'Curated selection of items ready for sale/upcycle.'},
 ];
 
-const REDEEM_OPTIONS = [
-    {id:'r1', type:'voucher', name:'10% Shop Discount', points:200, reward:'10% OFF any Shop Item', action: (state) => { alert('10% Voucher Redeemed!'); state.rePoints -= 200; }},
-    {id:'r2', type:'donation', name:'Plant a Tree', points:50, reward:'Plant one extra tree on your behalf.', action: (state) => { state.trees += 1; state.rePoints -= 50; alert('1 Tree Planted! Thank you for your impact.'); }},
-    {id:'r3', type:'tips', name:'Premium Stain Removal Guide', points:100, reward:'Unlock Advanced Care Tips', action: (state) => { alert('Premium Tip Unlocked!'); state.tips.push({id:uid('t'), title:'PREMIUM: Coffee Stain Removal', body:'Use a solution of vinegar and rubbing alcohol. Dab, do not rub!'}); state.rePoints -= 100; }},
-];
 
-// Refurbish status steps for tracker
-const REFURB_STEPS = ['Requested', 'Shipped to Atelier', 'In Repair', 'Ready'];
-
-const DEFAULT_TIPS = [
-{id:'t1', title:'Wash less, smell fresh', body:'Wash clothes only when needed; air garments and spot-clean to extend life.'},
-{id:'t2', title:'Cold water for colored garments', body:'Cold water preserves dyes and reduces energy usage.'},
-{id:'t3', title:'Mend small holes early', body:'Repairing small rips right away prevents bigger damage.'},
-{id:'t4', title:'Use a laundry bag', body:'Protect delicate fabrics and reduce pilling.'},
-{id:'t5', title:'Store with cedar', body:'Cedar wood keeps moths away and smells natural.'}
-];
-
-// localStorage keys
-const KEY = 'revogue_final_submission'; 
-
-// initialize storage if empty
-function seedData(){
-const base = {
-products: sampleProducts,
-wardrobe: [
-    {...sampleProducts[0], location:'wardrobe', qty:1, id:uid('w')}, 
-    {...sampleProducts[3], location:'wardrobe', qty:1, id:uid('w')}
-],
-rebox: [
-    {...sampleProducts[1], price: 35, boxDeal: 'ReBox - Ready', note: 'Ready for sale', qty:1, id:uid('w')}
-],
-refurbRequests: [
-    {id:uid('r'), itemTitle:sampleProducts[0].title, type:'mend', when: Date.now(), status:'Requested', statusIndex: 0},
-    {id:uid('r'), itemTitle:sampleProducts[3].title, type:'re-dye', when: Date.now() - (1000*60*60*24), status:'In Repair', statusIndex: 2},
-],
-community: [
-{id:'c1', user:'Aisha', text:'Restyled my denim jacket — turned it into a shacket! Love the refurbish service.', img:'https://images.unsplash.com/photo-1546525848-3ce03ca516f6?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7a9b4a317b6d7f3e', time: Date.now()-1000*60*60*24}
-],
-subscriptions: [],
-trees: 23,
-donations: 12,
-rePoints: 350, 
-tips: DEFAULT_TIPS,
-goals: {
-    refurbGoal: {target: 3, current: 1}, 
-    pointsGoal: {target: 1000, current: 350} 
-}
+const initialData = {
+    // Setting initial products based on the fixed list
+    products: sampleProducts, 
+    wardrobe: [],
+    refurbRequests: [],
+    community: [],
+    tips: [
+        {id:'t1', title:'Cold Wash Saves Energy', body:'Washing clothes on cold uses significantly less energy, preventing color fading and extending fabric life.'},
+        {id:'t2', title:'Air Dry for Longevity', body:'Avoid the dryer when possible. Tumble drying weakens fibers over time. Air drying preserves shape and energy.'},
+        {id:'t3', title:'Treat Stains Immediately', body:'Don\'t let stains set. Gently spot clean as soon as possible before a full wash.'}
+    ],
+    rePoints: 100,
+    goals: {
+        refurbGoal: {
+            title: 'Refurbish 3 Items',
+            target: 3,
+            current: 0,
+            reward: 200
+        },
+        wearGoal: {
+            title: 'Wear 10 Items 5+ Times',
+            target: 10,
+            current: 0,
+            reward: 300
+        }
+    },
+    subscriptions: []
 };
-localStorage.setItem(KEY, JSON.stringify(base));
-return base;
-}
-function loadData(){
-const raw = localStorage.getItem(KEY);
-if(!raw) return seedData();
-try{ return JSON.parse(raw); } catch(e){ return seedData(); }
-}
-function saveData(data){ 
-    localStorage.setItem(KEY, JSON.stringify(data)); 
-    const rePointsEl = document.getElementById('rePointsCount');
-    if(rePointsEl) rePointsEl.textContent = state.rePoints;
+
+// --- REST OF THE JAVASCRIPT CODE REMAINS HERE ---
+
+// Helper functions for various pages (keeping logic minimal)
+
+function uid(prefix = 'id') {
+    return prefix + Math.random().toString(36).substring(2, 9);
 }
 
-/* App state */
+function saveData(data) {
+    localStorage.setItem('revogueState', JSON.stringify(data));
+}
+
+function loadData() {
+    const data = localStorage.getItem('revogueState');
+    if (data) {
+        // When loading, make sure to integrate the latest product list (for new users)
+        let loadedState = JSON.parse(data);
+        loadedState.products = sampleProducts;
+        return loadedState;
+    }
+    return initialData;
+}
+
 let state = loadData();
 
-/* Helpers */
-function $(sel){ return document.querySelector(sel); }
-function q(sel, el=document){ return el.querySelector(sel); }
-function formatPrice(n){ return 'QAR ' + n.toFixed(2); }
-function uid(prefix='id'){ return prefix + Math.random().toString(36).slice(2,9); }
-function humanTime(ts){
-const d = Date.now()-ts;
-const mins = Math.round(d/60000);
-if(mins < 60) return mins + 'm';
-const hrs = Math.round(mins/60);
-if(hrs < 24) return hrs + 'h';
-const days = Math.round(hrs/24);
-return days + 'd';
+// Helper functions for rendering and routing
+function formatPrice(price) {
+    return `₹${price}`; // Assuming Indian Rupees based on context, adjust if needed
 }
 
-/* Router */
-function routeTo(page){
-if(!ROUTES.includes(page)) page='home';
-window.location.hash = '#'+page;
-render();
-}
-window.addEventListener('hashchange', render);
+function humanTime(timestamp) {
+    const now = Date.now();
+    const diff = now - timestamp;
+    const minutes = Math.floor(diff / (1000 * 60));
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-/* UI actions */
-document.getElementById('seedBtn').addEventListener('click', ()=>{
-if(confirm('Reset all data? This will clear any changes.')) {
-seedData();
-state = loadData();
-render();
-}
-});
-document.getElementById('newItemBtn').addEventListener('click', ()=>{
-routeTo('wardrobe');
-setTimeout(()=>{ window.scrollTo({top:0, behavior:'smooth'}); }, 120);
-});
-
-/* initial nav active */
-function setActiveNav(route){
-document.querySelectorAll('#navlinks a').forEach(a=>{
-a.classList.toggle('active', a.getAttribute('data-route') === route);
-});
+    if (minutes < 60) return `${minutes} min`;
+    if (hours < 24) return `${hours} hr`;
+    return `${days} day`;
 }
 
-/* Rendering pages */
-function render(){
-const main = document.getElementById('appMain');
-const hash = (window.location.hash || '#home').replace('#','');
-setActiveNav(hash);
-if(!ROUTES.includes(hash)) return routeTo('home');
+// Router/Renderer
+const appMain = document.getElementById('appMain');
+const navlinks = document.getElementById('navlinks');
 
-// Update RePoints count on every render
-const rePointsEl = document.getElementById('rePointsCount');
-if(rePointsEl) rePointsEl.textContent = state.rePoints;
+function routeTo(route) {
+    // 1. Update URL hash
+    window.location.hash = route;
 
-if(hash==='home') return renderHome(main);
-if(hash==='shop') return renderShop(main);
-if(hash==='wardrobe') return renderWardrobe(main);
-if(hash==='rebox') return renderRebox(main);
-if(hash==='dashboard') return renderDashboard(main);
-if(hash==='redeem') return renderRedeem(main);
-if(hash==='community') return renderCommunity(main);
-if(hash==='tips') return renderTips(main);
-if(hash==='about') return renderAbout(main);
+    // 2. Update active link in navigation
+    navlinks.querySelectorAll('a').forEach(link => {
+        if (link.dataset.route === route) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+
+    // 3. Render content
+    render();
 }
 
-/* Calculator Logic */
-const AVG_WATER_SAVED = 2700; // Liters for a new garment
-const AVG_CO2_SAVED = 33; // kg for a new garment
-function updateCalculatorDisplay(cycles){
-    const cyclesNum = Number(cycles) || 1;
-    const water = Math.round(AVG_WATER_SAVED * (cyclesNum / 10)); 
-    const co2 = (AVG_CO2_SAVED * (cyclesNum / 10)).toFixed(1);
+function render() {
+    const route = window.location.hash.substring(1) || 'home';
+    const pointsCount = document.getElementById('rePointsCount');
+    if(pointsCount) pointsCount.innerHTML = state.rePoints || 0;
 
-    const waterEl = document.getElementById('calcWater');
-    const co2El = document.getElementById('calcCO2');
-    const cyclesHintEl = document.getElementById('calcCyclesHint');
+    // Ensure the current route is valid, default to home
+    const currentRoute = ROUTES.includes(route) ? route : 'home';
+    routeTo(currentRoute); // Reroute to ensure URL/Nav match
 
-    if(waterEl && co2El && cyclesHintEl){
-        waterEl.textContent = water.toLocaleString();
-        co2El.textContent = co2;
-        cyclesHintEl.textContent = cyclesNum;
+    appMain.innerHTML = '';
+    
+    switch (currentRoute) {
+        case 'home':
+            renderHome(appMain);
+            break;
+        case 'shop':
+            renderShop(appMain);
+            break;
+        case 'wardrobe':
+            renderWardrobe(appMain);
+            break;
+        case 'rebox':
+            renderReBox(appMain);
+            break;
+        case 'dashboard':
+            renderDashboard(appMain);
+            break;
+        case 'redeem':
+            renderRedeem(appMain);
+            break;
+        case 'community':
+            renderCommunity(appMain);
+            break;
+        case 'tips':
+            renderTips(appMain);
+            break;
+        case 'about':
+            renderAbout(appMain);
+            break;
+        default:
+            renderHome(appMain);
     }
 }
 
+// Helper functions for various pages (keeping logic minimal)
 
-/* ---------- HOME ---------- */
-function renderHome(root){
-root.innerHTML = `
-<section class="grid" style="grid-template-columns:1fr 420px;gap:20px">
-<div>
-<div class="card">
-<h2>SECOND HAND. FIRST CHOICE.</h2>
-<p class="muted">ReVogue — a platform combining resale, refurbish, subscription care and community. Explore: add items to your **Wardrobe**, request refurbish, join **ReBox**, and track your impact.</p>
-<div style="margin-top:12px" class="flex">
-<button class="btn primary" onclick="routeTo('shop')">Shop</button>
-<button class="btn" onclick="routeTo('wardrobe')">My Wardrobe</button>
-<div style="flex:1"></div>
-<div class="chip">🌳 Trees planted: <strong id="treeCount">${state.trees}</strong></div>
-</div>
-</div>
-
-<div style="margin-top:14px" class="card">
-    <h4>Quick Footprint Calculator</h4>
-    <div class="muted">Estimate your environmental savings by extending the life of a garment instead of buying new.</div>
-    <label style="margin-top:10px">How many extra cycles (wears) will you get?</label>
-    <input type="number" id="calcCycles" value="10" min="1" max="500" />
-    
-    <div style="margin-top:10px;text-align:center;padding:10px;border-radius:8px;background:var(--glass-2)">
-        <div class="small-muted">Estimated Savings (for <strong id="calcCyclesHint">10</strong> extra cycles)</div>
-        <div style="font-weight:900;font-size:20px;margin-top:4px;color:var(--accent-2)">
-            <span id="calcWater">2,700</span> L Water & 
-            <span id="calcCO2">33.0</span> kg CO₂
+/* ---------- Home ---------- */
+function renderHome(root) {
+    root.innerHTML = `
+        <div class="grid cols-3">
+            <div class="card">
+                <h3>Circular Fashion</h3>
+                <div class="muted">ReVogue is your marketplace for second-hand items and sustainable re-commerce services.</div>
+                <div style="margin-top:10px;display:flex;gap:8px">
+                    <button class="btn primary" onclick="routeTo('shop')">Shop Now</button>
+                    <button class="btn" onclick="routeTo('rebox')">Get a ReBox</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3>My Impact</h3>
+                <div class="kpi"><span class="val">${state.wardrobe.length}</span> items in my wardrobe</div>
+                <div class="kpi" style="margin-top:8px"><span class="val">${state.refurbRequests.length}</span> refurbish requests sent</div>
+                <div style="margin-top:10px">
+                    <button class="btn primary" onclick="routeTo('dashboard')">View Dashboard</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3>ReCommunity</h3>
+                <div class="muted">Join discussions, share your sustainable style, and get repair tips.</div>
+                <div style="margin-top:10px">
+                    <button class="btn primary" onclick="routeTo('community')">Join the Feed</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-<div style="margin-top:14px" class="card">
-<h3>Featured ReBox Subscription</h3>
-<div style="display:flex;gap:12px;align-items:center;margin-top:8px">
-<div style="width:100px;height:100px;background-image:url('${REBOX_TIERS[1].img}');background-size:cover;border-radius:10px"></div>
-<div>
-<div style="font-weight:800">${REBOX_TIERS[1].title}</div>
-<div class="muted">${REBOX_TIERS[1].note}</div>
-<div style="margin-top:6px" class="price">${formatPrice(REBOX_TIERS[1].price)}</div>
-<div style="margin-top:8px">
-<button class="btn primary" onclick="routeTo('rebox')">View Tiers</button>
-</div>
-</div>
-</div>
-</div>
-
-<div style="margin-top:14px" class="card">
-<h3>Quick actions</h3>
-<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-<button class="btn" onclick="routeTo('dashboard')">View Impact Dashboard</button>
-<button class="btn" onclick="routeTo('redeem')">Redeem RePoints</button>
-<button class="btn" onclick="routeTo('community')">Share a Post</button>
-</div>
-</div>
-</div>
-
-<div>
-<div class="card">
-<h4>Your Virtual Closet Snapshot</h4>
-<div style="margin-top:12px" id="closet-snap"></div>
-</div>
-
-<div style="margin-top:12px" class="card">
-<h4>Recent Refurb Requests</h4>
-<div id="recent-refurbs" style="margin-top:10px"></div>
-</div>
-
-<div style="margin-top:12px" class="card">
-<h4>Community Highlights</h4>
-<div id="comm-high" style="margin-top:10px"></div>
-</div>
-</div>
-</section>
-`;
-
-// populate calculator
-const calcInput = root.querySelector('#calcCycles');
-if (calcInput) {
-    updateCalculatorDisplay(calcInput.value);
-    calcInput.addEventListener('input', (e) => updateCalculatorDisplay(e.target.value));
-}
-
-// populate closet snapshot
-const snap = root.querySelector('#closet-snap');
-snap.innerHTML = state.wardrobe.length ? state.wardrobe.slice(0, 3).map(it=>`
-<div style="display:flex;gap:10px;align-items:center;margin-bottom:8px">
-<div style="width:56px;height:56px;background-image:url('${it.img}');background-size:cover;background-position:center;border-radius:8px"></div>
-<div style="flex:1">
-<div style="font-weight:700">${it.title}</div>
-<div class="small-muted">${it.qty} • ${formatPrice(it.price)}</div>
-</div>
-<div><div class="pill">${it.location}</div></div>
-</div>
-`).join('') : '<div class="muted">Your closet is empty — click "Add Closet Item" to add one.</div>';
-
-// recent refurbs
-const recent = root.querySelector('#recent-refurbs');
-if(state.refurbRequests && state.refurbRequests.length){
-recent.innerHTML = state.refurbRequests.slice(-3).reverse().map(r=>{
-    const statusText = r.status || 'pending';
-    return `
-        <div style="border-bottom:1px solid rgba(255,255,255,0.02);padding:8px 0">
-            <div style="font-weight:700">${r.itemTitle || 'Custom request'}</div>
-            <div class="small-muted">${r.type} • ${new Date(r.when).toLocaleString()}</div>
-            <div style="margin-top:4px"><span class="pill">${statusText}</span></div>
+        
+        <div style="margin-top:20px" class="card">
+            <h4>Featured Products</h4>
+            <div class="grid cols-3" style="margin-top:10px" id="featuredProducts">
+                
+            </div>
         </div>
     `;
-}).join('');
-} else recent.innerHTML = '<div class="muted">No refurbish requests yet — make one on a product card.</div>';
 
-// community highlights
-const ch = root.querySelector('#comm-high');
-ch.innerHTML = state.community.slice(-3).reverse().map(c=>`
-<div class="card community-post" style="display:flex;gap:12px;margin-bottom:10px">
-<img src="${c.img}" />
-<div style="flex:1">
-<div style="font-weight:900">${c.user} <span class="small-muted">· ${humanTime(c.time)} ago</span></div>
-<div class="muted" style="margin-top:6px">${c.text}</div>
-</div>
-</div>
-`).join('');
-}
-
-/* ---------- SHOP ---------- */
-function renderShop(root){
-root.innerHTML = `
-<section>
-<div class="card">
-<div class="space-between">
-<div>
-<h3>ReVogue Shop — curated second-hand and refurbished</h3>
-<div class="muted">Browse products, view fabric story, request refurbish, or add to your wardrobe.</div>
-</div>
-<div class="kpi">
-<div class="small-muted">Total items</div>
-<div class="val">${state.products.length}</div>
-</div>
-</div>
-</div>
-
-<div style="margin-top:14px" class="grid cols-3" id="productsGrid"></div>
-</section>
-`;
-
-const grid = root.querySelector('#productsGrid');
-grid.innerHTML = state.products.map(p=>`
-<div class="card product" data-id="${p.id}">
-<div class="product-img" style="background-image:url('${p.img}')"></div>
-<div class="flex space-between">
-<div>
-<div style="font-weight:800">${p.title}</div>
-<div class="muted small">${p.fabric}</div>
-</div>
-<div style="text-align:right">
-<div class="price">${formatPrice(p.price)}</div>
-<div class="small-muted">used ${p.cycles} cycles</div>
-</div>
-</div>
-
-<div style="margin-top:10px">
-<div class="small-muted">Life Meter</div>
-<div class="life-meter" title="${p.life}% remaining"><i style="width:${p.life}%"></i></div>
-</div>
-
-<div style="margin-top:10px;display:flex;gap:8px">
-<button class="btn primary" onclick="addToWardrobe('${p.id}')">Add to Wardrobe</button>
-<button class="btn" onclick="openRefurbForm('${p.id}')">Refurbish</button>
-<button class="btn" onclick="openDetail('${p.id}')">View Fabric Story</button>
-</div>
-</div>
-`).join('');
-}
-
-function addToWardrobe(id){
-    const item = state.products.find(x=>x.id===id);
-    if(!item) return;
-    state.wardrobe.push({...item, location:'wardrobe', id:uid('w')}); 
-    saveData(state); 
-    alert(item.title + ' added to your Wardrobe!');
+    const featured = root.querySelector('#featuredProducts');
+    featured.innerHTML = state.products.slice(0, 3).map(p => `
+        <div class="card" onclick="openDetail('${p.id}')">
+            <div class="product-img" style="background-image:url('${p.img}')"></div>
+            <div>${p.title}</div>
+            <div class="price">${formatPrice(p.price)}</div>
+            <div class="life-meter" title="Life Remaining: ${p.life}%"><i style="width:${p.life}%"></i></div>
+        </div>
+    `).join('');
 }
 
 
-/* ---------- Wardrobe ---------- (Add & edit items) */
-function renderWardrobe(root){
-root.innerHTML = `
-<section>
-<div class="card">
-<h3>My Wardrobe</h3>
-<div class="muted">Items you own. Prices shown so you can compare resale vs ReBox offers.</div>
-</div>
-
-<div style="margin-top:12px" class="grid cols-3" id="wardrobeGrid"></div>
-
-<div style="margin-top:12px" class="card">
-<h4>Add a Closet Item</h4>
-<form id="addClosetForm">
-<div class="form-row">
-<input type="text" id="ciTitle" placeholder="Item title (e.g., Old Shirt)" required />
-<input type="number" id="ciPrice" placeholder="Value (QAR)" required />
-</div>
-<label>Image URL (optional)</label>
-<input type="text" id="ciImg" placeholder="https://..." />
-<div class="form-row" style="margin-top:8px">
-<select id="ciLocation">
-<option value="wardrobe">Wardrobe (Keep)</option>
-<option value="rebox">ReBox (Sell/Upcycle)</option>
-</select>
-<input type="number" id="ciQty" placeholder="Quantity" value="1" />
-</div>
-<label>Fabric story (short)</label>
-<input type="text" id="ciFabric" placeholder="Organic cotton, origin, notes..." />
-<div style="margin-top:8px;display:flex;gap:8px">
-<button class="btn primary" type="submit">Add Item</button>
-<button class="btn secondary" type="button" id="ciCancel">Cancel</button>
-</div>
-</form>
-</div>
-</section>
-`;
-
-const grid = root.querySelector('#wardrobeGrid');
-grid.innerHTML = state.wardrobe.map((w,i)=>`
-<div class="card">
-<div style="display:flex;gap:12px">
-<div style="width:120px;height:120px;background-image:url('${w.img}');background-size:cover;background-position:center;border-radius:10px"></div>
-<div style="flex:1">
-<div style="font-weight:800">${w.title}</div>
-<div class="muted">${w.fabric || 'Fabric details not added'}</div>
-<div style="margin-top:8px" class="price">${formatPrice(w.price || 0)}</div>
-<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-<button class="btn" onclick="requestRefurbFromWardrobe(${i})">Request Refurbish</button>
-<button class="btn primary" onclick="moveToRebox(${i})">Send to ReBox</button>
-<button class="btn" onclick="removeWardrobeItem(${i})">Remove</button>
-</div>
-</div>
-</div>
-</div>
-`).join('');
-
-// add closet form actions
-const form = root.querySelector('#addClosetForm');
-form.addEventListener('submit', (e)=>{
-e.preventDefault();
-const title = root.querySelector('#ciTitle').value.trim();
-const price = Number(root.querySelector('#ciPrice').value) || 0;
-const img = root.querySelector('#ciImg').value.trim() || sampleProducts[0].img;
-const location = root.querySelector('#ciLocation').value;
-const qty = Number(root.querySelector('#ciQty').value) || 1;
-const fabric = root.querySelector('#ciFabric').value.trim();
-const item = {id:uid('w'), title, price, img, location, qty, fabric, life:80, cycles:5, saved_water_liters:200, co2_saved_kg:2.5, care:'Care details added later.'};
-if(location === 'wardrobe') state.wardrobe.push(item);
-else {
-    state.rebox.push(item);
-    state.rePoints += 30; // Earn RePoints for sending to ReBox
-}
-saveData(state); render();
-form.reset();
-alert('Added to ' + location);
-});
-root.querySelector('#ciCancel').addEventListener('click', ()=>{ form.reset(); });
-}
-
-function removeWardrobeItem(index){
-if(!confirm('Remove this item from wardrobe?')) return;
-state.wardrobe.splice(index,1);
-saveData(state); render();
-}
-
-function moveToRebox(index){
-const item = state.wardrobe.splice(index,1)[0];
-item.location = 'rebox';
-state.rebox.push(item);
-state.rePoints += 30; // Earn RePoints for sending to ReBox
-saveData(state); render();
-}
-
-function requestRefurbFromWardrobe(index){
-const item = state.wardrobe[index];
-openRefurbForm(item.id, item);
-}
-
-/* ---------- ReBox ---------- (subscription & items) */
-function renderRebox(root){
-root.innerHTML = `
-<section>
-<div class="card">
-<h3>ReBox — curated, refurbished boxes</h3>
-<div class="muted">Choose a ReBox subscription tier for curated seasonal items delivered to you.</div>
-</div>
-
-<div style="margin-top:12px" class="grid cols-3" id="reboxTiersGrid">
-    </div>
-
-<div style="margin-top:12px" class="card">
-<h4>Items Ready for ReBox Resale/Upcycle</h4>
-<div class="muted">These are items you sent for processing. They are awaiting sale or refurbishment.</div>
-<div style="margin-top:12px" class="grid cols-3" id="reboxItemsGrid"></div>
-</div>
-
-<div style="margin-top:12px" class="card">
-<h4>ReCare Subscription</h4>
-<div class="muted">Monthly care for your wardrobe: minor repairs, discounts on refurbish, and fabric care kits.</div>
-<form id="subForm" style="margin-top:10px">
-<label>Plan</label>
-<select id="subPlan">
-<option value="starter">Starter — QAR 25 / month (1 minor repair)</option>
-<option value="plus">Plus — QAR 55 / month (3 minor repairs + 10% refurb)</option>
-<option value="pro">Pro — QAR 95 / month (unlimited minor repairs + 20% refurb)</option>
-</select>
-<div style="margin-top:8px" class="form-row">
-<input type="text" id="subName" placeholder="Your name" required />
-<input type="text" id="subContact" placeholder="Contact (email/phone)" required />
-</div>
-<div style="margin-top:8px" class="flex">
-<button class="btn primary" type="submit">Subscribe to ReCare</button>
-<div style="flex:1"></div>
-<div class="small-muted">You can cancel at any time.</div>
-</div>
-</form>
-</div>
-</section>
-`;
-
-const tiersGrid = root.querySelector('#reboxTiersGrid');
-tiersGrid.innerHTML = REBOX_TIERS.map(t=>`
-<div class="card" style="border: 2px solid var(--accent-2)">
-<div style="font-weight:900;font-size:16px">${t.title}</div>
-<div class="muted">${t.frequency} — Earn **${t.points}** RePoints</div>
-<div style="margin-top:6px" class="price">${formatPrice(t.price)}</div>
-<div style="margin-top:8px">
-<button class="btn primary" onclick="subscribeToReboxTier('${t.id}')">Get ReBox</button>
-</div>
-</div>
-`).join('');
-
-const itemsGrid = root.querySelector('#reboxItemsGrid');
-itemsGrid.innerHTML = state.rebox.map(p=>`
-<div class="card">
-<div style="height:120px;background-image:url('${p.img}');background-size:cover;background-position:center;border-radius:10px"></div>
-<div style="margin-top:8px">
-<div style="font-weight:800">${p.title}</div>
-<div class="muted">${p.note || p.fabric || ''}</div>
-<div style="margin-top:6px" class="price">${formatPrice(p.price || 0)}</div>
-</div>
-</div>
-`).join('') || '<div class="muted" style="grid-column: span 3;">No items currently awaiting processing in ReBox. Send some from your wardrobe!</div>';
-
-
-// subscription form (ReCare)
-root.querySelector('#subForm').addEventListener('submit', (e)=>{
-e.preventDefault();
-const plan = root.querySelector('#subPlan').value;
-const name = root.querySelector('#subName').value.trim();
-const contact = root.querySelector('#subContact').value.trim();
-state.subscriptions.push({id:uid('s'), plan, name, contact, when: Date.now(), type:'ReCare'});
-state.trees += 1;
-state.rePoints += 100; // Earn RePoints
-saveData(state); alert('Subscribed to ReCare! Plan: ' + plan + '. Earned 100 RePoints.'); render();
-});
-}
-
-function subscribeToReboxTier(tierId){
-const tier = REBOX_TIERS.find(x=>x.id===tierId);
-if(!tier) return alert('ReBox tier not found');
-
-state.subscriptions.push({id:uid('s'), plan: tier.title, name: 'User', contact:'user@revogue', when: Date.now(), type:'ReBox'});
-state.trees += 1;
-state.rePoints += tier.points; 
-saveData(state);
-alert(tier.title + ' ordered! You earned ' + tier.points + ' RePoints!');
-render();
-}
-
-
-/* ---------- Dashboard ---------- (impact) */
-function renderDashboard(root){
-// compute impacts
-const allItems = [...state.products, ...state.wardrobe, ...state.rebox];
-const totalWater = allItems.reduce((s,i)=> s + (i.saved_water_liters||0), 0);
-const totalCO2 = allItems.reduce((s,i)=> s + (i.co2_saved_kg||0), 0);
-const garmentsSaved = new Set(allItems.map(i=>i.title)).size;
-
-root.innerHTML = `
-<div class="card">
-<h3>Impact Dashboard</h3>
-<div class="muted">Your impact metrics — how much your sustainable choices have saved.</div>
-<div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
-<div class="card" style="min-width:160px">
-<div class="small-muted">Water saved</div>
-<div style="font-weight:900;font-size:20px">${Math.round(totalWater).toLocaleString()} L</div>
-</div>
-<div class="card" style="min-width:160px">
-<div class="small-muted">CO₂ offset</div>
-<div style="font-weight:900;font-size:20px">${Math.round(totalCO2).toLocaleString()} kg</div>
-</div>
-<div class="card" style="min-width:160px">
-<div class="small-muted">Garments saved</div>
-<div style="font-weight:900;font-size:20px">${garmentsSaved}</div>
-</div>
-<div class="card" style="min-width:160px">
-<div class="small-muted">Trees planted (by ReVogue)</div>
-<div style="font-weight:900;font-size:20px">${state.trees}</div>
-</div>
-<div class="card" style="min-width:160px">
-<div class="small-muted">RePoints earned</div>
-<div style="font-weight:900;font-size:20px">${state.rePoints} ⭐</div>
-</div>
-</div>
-</div>
-
-<div style="margin-top:12px" class="grid cols-2">
-    <div class="card">
-        <h4>🎯 My Sustainability Goals</h4>
-        ${renderGoal('refurbGoal', 'Refurbish Requests this Year', state.goals.refurbGoal.current, state.goals.refurbGoal.target)}
-        ${renderGoal('pointsGoal', 'Earn RePoints Total', state.goals.pointsGoal.current, state.goals.pointsGoal.target)}
-        <div style="margin-top:10px" class="small-muted">Keep making sustainable choices to hit your goals!</div>
-    </div>
-    
-    <div class="card">
-        <h4>Subscriptions</h4>
-        <div id="subList" style="margin-top:8px"></div>
-    </div>
-</div>
-
-
-<div style="margin-top:12px" class="card">
-<h4>Refurbish Requests Tracker</h4>
-<div id="refurbList" style="margin-top:8px"></div>
-</div>
-`;
-
-// Render goals helper
-function renderGoal(key, title, current, target) {
-    const progress = Math.min(100, (current / target) * 100);
-    const complete = current >= target ? ' (COMPLETE!)' : '';
-    return `
-        <div style="margin-bottom:12px; padding-bottom: 8px; border-bottom: 1px solid var(--glass-2);">
-            <div style="font-weight:700">${title}${complete}</div>
-            <div class="small-muted">${current} / ${target}</div>
-            <div class="goal-bar"><div class="goal-progress" style="width:${progress}%"></div></div>
+/* ---------- Shop ---------- */
+function renderShop(root) {
+    root.innerHTML = `
+        <div class="card">
+            <h3>Sustainable Marketplace</h3>
+            <div class="muted">Every item has a 'Fabric Story' and a 'Life Meter' to track its sustainability impact.</div>
+            <div style="margin-top:12px">
+                <div class="search">
+                    <input type="text" id="productSearch" placeholder="Search product name or fabric (e.g. Linen, Denim)" />
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top:12px" class="grid cols-3" id="productList">
         </div>
     `;
+    
+    const list = root.querySelector('#productList');
+    const searchInput = root.querySelector('#productSearch');
+
+    function renderList(filter = '') {
+        const filteredProducts = state.products.filter(p => 
+            p.title.toLowerCase().includes(filter) || p.fabric.toLowerCase().includes(filter)
+        );
+        list.innerHTML = filteredProducts.map(p => `
+            <div class="card" onclick="openDetail('${p.id}')">
+                <div class="product-img" style="background-image:url('${p.img}')"></div>
+                <div class="space-between">
+                    <div>${p.title}</div>
+                    <div class="price">${formatPrice(p.price)}</div>
+                </div>
+                <div class="small">Life: <strong style="color:var(--accent-2);">${p.life}%</strong></div>
+                <div class="life-meter" title="Life Remaining: ${p.life}%"><i style="width:${p.life}%"></i></div>
+            </div>
+        `).join('');
+    }
+
+    renderList();
+    searchInput.addEventListener('input', (e) => renderList(e.target.value.trim().toLowerCase()));
 }
 
-// refurb list
-const rlist = root.querySelector('#refurbList');
-rlist.innerHTML = state.refurbRequests.length ? state.refurbRequests.map(r=>{
-    const progressIndex = r.statusIndex || 0;
-    const progressWidth = (progressIndex / (REFURB_STEPS.length - 1)) * 100;
-    return `
-        <div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.02)">
-            <div style="font-weight:800">${r.itemTitle || r.itemId} - ${r.type}</div>
-            <div class="small-muted">Status: ${r.status}</div>
-            
-            <div class="tracker-container">
-                <div class="tracker-line"></div>
-                <div class="tracker-progress" style="width:${progressWidth}%"></div>
-                ${REFURB_STEPS.map((step, index) => `
-                    <div class="tracker-step ${index <= progressIndex ? 'active' : ''}">
-                        <div class="tracker-dot"></div>
-                        <div class="tracker-step-title" style="transform: translateX(${index===0 ? '-50%' : index === REFURB_STEPS.length - 1 ? '-50%' : '-50%'})">${step}</div>
+/* ---------- Wardrobe ---------- */
+function renderWardrobe(root) {
+    root.innerHTML = `
+        <div class="card">
+            <h3>My Digital Wardrobe (${state.wardrobe.length} Items)</h3>
+            <div class="muted">Track the wear and care cycles of your items. Manage refurbishment requests here.</div>
+            <button class="btn secondary" style="margin-top:10px" onclick="openRefurbForm(uid('new'), {title:'New Item'})">+ Add Non-Marketplace Item</button>
+        </div>
+        
+        <div style="margin-top:12px" class="grid cols-2" id="wardrobeList">
+        </div>
+    `;
+
+    const list = root.querySelector('#wardrobeList');
+
+    function renderList() {
+        if(state.wardrobe.length === 0){
+            list.innerHTML = '<div class="card" style="grid-column: span 2;text-align:center">Your wardrobe is empty. Add items from the Shop or manually add new items.</div>';
+            return;
+        }
+
+        list.innerHTML = state.wardrobe.map(item => `
+            <div class="card" style="display:flex;gap:12px">
+                <div style="width:100px;height:100px;background-image:url('${item.img}');background-size:cover;background-position:center;border-radius:8px;flex-shrink:0;"></div>
+                <div style="flex:1">
+                    <div style="font-weight:900">${item.title}</div>
+                    <div class="small">Worn: <strong>${item.worn || 0} times</strong> | Life: <strong>${item.life}%</strong></div>
+                    <div class="life-meter"><i style="width:${item.life}%"></i></div>
+                    <div style="margin-top:10px;display:flex;gap:6px">
+                        <button class="btn primary" onclick="wearItem('${item.id}')">Worn!</button>
+                        <button class="btn" onclick="openRefurbForm('${item.id}')">Refurbish</button>
+                        <button class="btn" onclick="removeItem('${item.id}')">Remove</button>
                     </div>
-                `).join('')}
+                </div>
             </div>
-            <div style="margin-top:40px;text-align:right;">
-                <button class="btn" onclick="updateRefurbStatus('${r.id}')">Advance Status</button>
+        `).join('');
+    }
+
+    renderList();
+}
+
+function addToWardrobe(id) {
+    const p = state.products.find(x => x.id === id);
+    if (p && !state.wardrobe.find(x => x.id === id)) {
+        state.wardrobe.push({ ...p, worn: 0 });
+        saveData(state);
+        alert(`${p.title} added to your wardrobe!`);
+    } else {
+        alert('Item is already in your wardrobe.');
+    }
+    render();
+}
+
+function wearItem(id) {
+    const item = state.wardrobe.find(x => x.id === id);
+    if (item) {
+        item.worn = (item.worn || 0) + 1;
+        item.life = Math.max(0, item.life - 1); // Decrease life slightly
+        state.rePoints += 5; // Reward for wearing
+        
+        // Check for wear goal completion (simple check for items worn 5+ times)
+        const wornFivePlus = state.wardrobe.filter(i => (i.worn || 0) >= 5).length;
+        if(wornFivePlus >= state.goals.wearGoal.target && state.goals.wearGoal.current < state.goals.wearGoal.target){
+            state.goals.wearGoal.current = state.goals.wearGoal.target; // Simple completion flag
+            state.rePoints += state.goals.wearGoal.reward;
+            alert(`Goal Complete! Earned ${state.goals.wearGoal.reward} RePoints!`);
+        }
+
+
+        saveData(state);
+        alert(`Worn ${item.title}! You earned 5 RePoints.`);
+    }
+    render();
+}
+
+function removeItem(id){
+    if(confirm('Are you sure you want to remove this item?')){
+        state.wardrobe = state.wardrobe.filter(x => x.id !== id);
+        saveData(state);
+        render();
+    }
+}
+
+
+/* ---------- ReBox ---------- */
+function renderReBox(root) {
+    const isSubscribed = state.subscriptions.includes('rebox');
+    
+    root.innerHTML = `
+        <div class="card">
+            <h3>ReBox Subscription</h3>
+            <div class="muted">Get a curated box of second-hand or upcycled items sent to your door. Great for reducing decision fatigue and supporting circularity.</div>
+            <div style="margin-top:10px">
+                ${isSubscribed 
+                    ? `<span class="pill">SUBSCRIBED</span> <span class="small-muted">You are currently receiving the ${state.subscriptions.find(s=>s.includes('rb')) || 'Monthly'} ReBox.</span>`
+                    : `<span class="pill secondary">NOT SUBSCRIBED</span>`}
+            </div>
+            ${isSubscribed ? `<button class="btn danger" style="margin-top:10px" onclick="unsubscribe('rebox')">Cancel Subscription</button>` : ''}
+        </div>
+        
+        <div style="margin-top:12px" class="grid cols-3">
+            ${REBOX_TIERS.map(tier => `
+                <div class="card">
+                    <div style="background-image:url('${tier.img}');height:120px;background-size:cover;background-position:center;border-radius:8px;margin-bottom:10px"></div>
+                    <h4>${tier.title}</h4>
+                    <div class="price">${formatPrice(tier.price)} <span class="small-muted">/${tier.frequency.toLowerCase()}</span></div>
+                    <div class="muted" style="margin-top:6px">${tier.note}</div>
+                    <div style="margin-top:10px">
+                        ${isSubscribed && state.subscriptions.includes(tier.id) 
+                            ? `<button class="btn primary" disabled>Current Tier</button>` 
+                            : `<button class="btn primary" onclick="subscribe('${tier.id}')">Subscribe (${tier.points} Points)</button>`}
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function subscribe(tierId){
+    const tier = REBOX_TIERS.find(t=>t.id === tierId);
+    if(tier && state.rePoints >= tier.points){
+        state.rePoints -= tier.points;
+        state.subscriptions = state.subscriptions.filter(s=>!s.startsWith('rb')); // Remove existing tier
+        state.subscriptions.push(tierId);
+        saveData(state);
+        alert(`Subscribed to ${tier.title}! Used ${tier.points} RePoints.`);
+    } else if (tier) {
+        alert('Not enough RePoints to subscribe to this tier!');
+    }
+    render();
+}
+
+function unsubscribe(type){
+    if(confirm(`Are you sure you want to cancel your ${type} subscription?`)){
+        state.subscriptions = state.subscriptions.filter(s=>!s.includes(type));
+        saveData(state);
+        alert(`${type} subscription cancelled.`);
+        render();
+    }
+}
+
+
+/* ---------- Dashboard ---------- */
+function renderDashboard(root) {
+    const refurbGoal = state.goals.refurbGoal;
+    const wearGoal = state.goals.wearGoal;
+    const refurbProgress = Math.min(100, (refurbGoal.current / refurbGoal.target) * 100);
+
+    const totalWorn = state.wardrobe.reduce((sum, item) => sum + (item.worn || 0), 0);
+    const totalWaterSaved = state.wardrobe.reduce((sum, item) => sum + (item.saved_water_liters || 0), 0);
+    const totalCO2Saved = state.wardrobe.reduce((sum, item) => sum + (item.co2_saved_kg || 0), 0);
+
+    const trackerProgress = Math.min(100, (state.refurbRequests.reduce((sum, r) => sum + r.statusIndex, 0) / (state.refurbRequests.length * 3 || 1)) * 100);
+    
+    root.innerHTML = `
+        <h3>My Impact Dashboard</h3>
+        
+        <div class="grid cols-3">
+            <div class="card">
+                <h4>Total Wardrobe Impact</h4>
+                <div class="kpi"><span class="val">${totalWorn}</span> Total Wears</div>
+                <div class="kpi" style="margin-top:8px"><span class="val">${totalWaterSaved} L</span> Water Saved</div>
+                <div class="kpi" style="margin-top:8px"><span class="val">${totalCO2Saved} kg</span> CO₂ Offset</div>
+            </div>
+            <div class="card" style="grid-column: span 2">
+                <h4>Refurbishment Tracker</h4>
+                <div class="muted">Last Request: <strong>${state.refurbRequests[state.refurbRequests.length-1]?.itemTitle || 'None'}</strong> | Status: <strong>${state.refurbRequests[state.refurbRequests.length-1]?.status || 'N/A'}</strong></div>
+                
+                <div class="tracker-container">
+                    <div class="tracker-line"></div>
+                    <div class="tracker-progress" style="width:${trackerProgress}%"></div>
+                    <div class="tracker-step active">
+                        <div class="tracker-dot"></div>
+                        <div class="tracker-step-title">Requested</div>
+                    </div>
+                    <div class="tracker-step ${trackerProgress > 33 ? 'active':''}" style="left:33%">
+                        <div class="tracker-dot"></div>
+                        <div class="tracker-step-title">In Progress</div>
+                    </div>
+                    <div class="tracker-step ${trackerProgress > 66 ? 'active':''}" style="left:66%">
+                        <div class="tracker-dot"></div>
+                        <div class="tracker-step-title">Quality Check</div>
+                    </div>
+                    <div class="tracker-step ${trackerProgress === 100 ? 'active':''}" style="left:100%">
+                        <div class="tracker-dot"></div>
+                        <div class="tracker-step-title">Shipped Back</div>
+                    </div>
+                </div>
+                <div style="margin-top:30px">
+                    <button class="btn" onclick="advanceTracker()">Advance Tracker (Simulate)</button>
+                    <button class="btn" onclick="routeTo('wardrobe')">Send New Request</button>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top:20px" class="card">
+            <h4>RePoints Goals</h4>
+            <div class="grid cols-2" style="margin-top:10px">
+                <div>
+                    <strong>${refurbGoal.title}</strong>
+                    <div class="muted">${refurbGoal.current} / ${refurbGoal.target} complete</div>
+                    <div class="goal-bar"><div class="goal-progress" style="width:${refurbProgress}%"></div></div>
+                </div>
+                <div>
+                    <strong>${wearGoal.title}</strong>
+                    <div class="muted">Currently tracking ${state.wardrobe.filter(i => (i.worn || 0) >= 5).length} items</div>
+                    <div class="goal-bar"><div class="goal-progress" style="width:${Math.min(100, (state.wardrobe.filter(i => (i.worn || 0) >= 5).length / wearGoal.target) * 100)}%"></div></div>
+                </div>
             </div>
         </div>
     `;
-}).join('') : '<div class="muted">No refurbish requests yet.</div>';
-
-// subs
-const sl = root.querySelector('#subList');
-sl.innerHTML = state.subscriptions.length ? state.subscriptions.map(s=>`
-<div style="padding:8px;border-bottom:1px solid rgba(255,255,255,0.02)">
-<div style="font-weight:800">${s.plan} (${s.type})</div>
-<div class="small-muted">${s.name} • ${new Date(s.when).toLocaleDateString()}</div>
-</div>
-`).join('') : '<div class="muted">No subscriptions yet.</div>';
 }
 
-function updateRefurbStatus(id){
-    const req = state.refurbRequests.find(r => r.id === id);
-    if (!req) return;
-
-    req.statusIndex = (req.statusIndex + 1) % REFURB_STEPS.length;
-    req.status = REFURB_STEPS[req.statusIndex];
-
-    if (req.status === 'Ready') {
-        state.rePoints += 100; // Reward for successful completion
-        alert(`Refurbish Complete! ${req.itemTitle} is ready. Earned 100 RePoints!`);
+function advanceTracker() {
+    if(state.refurbRequests.length === 0){
+        return alert('No refurbish requests to track!');
     }
-
+    const req = state.refurbRequests[state.refurbRequests.length-1];
+    
+    if(req.statusIndex < 3){
+        req.statusIndex++;
+        const statuses = ['Requested', 'In Progress', 'Quality Check', 'Shipped Back'];
+        req.status = statuses[req.statusIndex];
+        
+        if(req.status === 'Shipped Back'){
+            state.rePoints += 100; // Bonus for completion
+            alert(`Refurbishment complete for ${req.itemTitle}! Earned 100 bonus RePoints.`);
+        }
+    } else {
+        alert('Item has already shipped back.');
+    }
     saveData(state);
     render();
 }
 
-/* ---------- REDEEM ---------- (RePoints Redemption Center) */
-function renderRedeem(root){
-root.innerHTML = `
-<div class="card">
-<h3>⭐ RePoints Redemption Center</h3>
-<div class="muted">You have ${state.rePoints} RePoints. Spend them to gain benefits or increase your impact!</div>
-</div>
-
-<div style="margin-top:12px" class="grid cols-3" id="redeemOptions">
-    ${REDEEM_OPTIONS.map(opt => `
-        <div class="card" style="text-align:center;">
-            <div style="font-size:32px;margin-bottom:8px;">${opt.type === 'voucher' ? '🏷️' : opt.type === 'donation' ? '🌳' : '📖'}</div>
-            <div style="font-weight:900;font-size:16px">${opt.name}</div>
-            <div class="muted" style="min-height:40px">${opt.reward}</div>
-            <div style="margin-top:12px">
-                <button class="btn primary" 
-                    onclick="redeemOption('${opt.id}')"
-                    ${state.rePoints < opt.points ? 'disabled' : ''}
-                    title="${state.rePoints < opt.points ? 'Not enough RePoints' : 'Redeem Now'}"
-                >
-                    Redeem for ${opt.points} ⭐
-                </button>
+/* ---------- Redeem ---------- */
+function renderRedeem(root) {
+    root.innerHTML = `
+        <div class="card">
+            <h3>Redeem RePoints ⭐</h3>
+            <div class="muted">Spend your RePoints on exclusive discounts, premium content, or services.</div>
+        </div>
+        
+        <div style="margin-top:12px" class="grid cols-3">
+            <div class="card">
+                <h4>20% Off Refurbishment</h4>
+                <div class="small-muted">One-time use coupon.</div>
+                <div class="price" style="margin-top:8px">150 RePoints</div>
+                <div style="margin-top:10px"><button class="btn primary" onclick="redeem('refurb_20', 150)">Redeem</button></div>
+            </div>
+            <div class="card">
+                <h4>Premium Care Tips</h4>
+                <div class="small-muted">Unlock advanced garment mending and spot-cleaning tutorials.</div>
+                <div class="price" style="margin-top:8px">300 RePoints</div>
+                <div style="margin-top:10px"><button class="btn primary" onclick="redeem('premium_tips', 300)">Redeem</button></div>
+            </div>
+            <div class="card">
+                <h4>Free Shipping</h4>
+                <div class="small-muted">Free shipping on your next shop order.</div>
+                <div class="price" style="margin-top:8px">80 RePoints</div>
+                <div style="margin-top:10px"><button class="btn primary" onclick="redeem('free_ship', 80)">Redeem</button></div>
             </div>
         </div>
-    `).join('')}
-</div>
-`;
+    `;
 }
 
-function redeemOption(id){
-    const option = REDEEM_OPTIONS.find(x => x.id === id);
-    if (!option) return;
-
-    if (state.rePoints >= option.points) {
-        // Execute the associated action
-        option.action(state); 
-        
-        // Update Goals if relevant
-        state.goals.pointsGoal.current = state.rePoints; // Update points goal tracking
-
+function redeem(itemId, cost){
+    if(state.rePoints >= cost){
+        state.rePoints -= cost;
         saveData(state);
-        render();
+        alert(`Redeemed ${cost} RePoints for ${itemId}! Check your email for the code.`);
     } else {
-        alert('Not enough RePoints to redeem this item!');
+        alert(`You need ${cost - state.rePoints} more RePoints to redeem this item.`);
     }
+    render();
 }
 
 
 /* ---------- Community ---------- */
-function renderCommunity(root){
-root.innerHTML = `
-<div class="card">
-<h3>ReCommunity</h3>
-<div class="muted">Share before/after photos, tips, and upcycle projects with the ReVogue community.</div>
-</div>
+function renderCommunity(root) {
+    root.innerHTML = `
+        <div class="card">
+            <h3>ReCommunity Feed</h3>
+            <div class="muted">Share your refurbish projects, sustainable outfits, and connect with other ReVogue users.</div>
+            
+            <form id="postForm" style="margin-top:12px" class="card">
+                <div class="form-row">
+                    <div style="flex:1">
+                        <label>Name</label>
+                        <input type="text" id="postUser" placeholder="Your name" required />
+                    </div>
+                    <div style="flex:1">
+                        <label>Image URL (optional)</label>
+                        <input type="text" id="postImg" placeholder="Image URL (optional)" />
+                    </div>
+                </div>
+                <label>Post</label>
+                <textarea id="postText" rows="3" placeholder="Share your refurbish story or photo"></textarea>
+                <div style="margin-top:8px;display:flex;gap:8px">
+                    <button class="btn primary" type="submit">Post</button>
+                    <button class="btn" type="button" onclick="routeTo('home')">Back</button>
+                </div>
+            </form>
+        </div>
 
-<div style="margin-top:12px" class="card">
-<form id="postForm">
-<div class="form-row">
-<input type="text" id="postUser" placeholder="Your name" required />
-<input type="text" id="postImg" placeholder="Image URL (optional)" />
-</div>
-<label>Post</label>
-<textarea id="postText" rows="3" placeholder="Share your refurbish story or photo"></textarea>
-<div style="margin-top:8px;display:flex;gap:8px">
-<button class="btn primary" type="submit">Post</button>
-<button class="btn" type="button" onclick="routeTo('home')">Back</button>
-</div>
-</form>
-</div>
+        <div style="margin-top:12px" id="feed"></div>
+    `;
 
-<div style="margin-top:12px" id="feed"></div>
-`;
+    const feed = root.querySelector('#feed');
+    function renderFeed(){
+        feed.innerHTML = state.community.slice().reverse().map(c=>`
+            <div class="card community-post" style="display:flex;gap:12px;margin-bottom:10px">
+                <img src="${c.img || '/ReVogue-sustainable/assets/images/default_user.png'}" />
+                <div style="flex:1">
+                    <div style="font-weight:900">${c.user} <span class="small-muted">· ${humanTime(c.time)} ago</span></div>
+                    <div class="muted" style="margin-top:6px">${c.text}</div>
+                    <div style="margin-top:8px"><button class="btn" onclick="likePost('${c.id}')">Like</button></div>
+                </div>
+            </div>
+        `).join('');
+    }
+    renderFeed();
 
-const feed = root.querySelector('#feed');
-function renderFeed(){
-feed.innerHTML = state.community.slice().reverse().map(c=>`
-<div class="card community-post" style="display:flex;gap:12px;margin-bottom:10px">
-<img src="${c.img || 'https://images.unsplash.com/photo-1546525848-3ce03ca516f6?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7a9b4a317b6d7f3e'}" />
-<div style="flex:1">
-<div style="font-weight:900">${c.user} <span class="small-muted">· ${humanTime(c.time)} ago</span></div>
-<div class="muted" style="margin-top:6px">${c.text}</div>
-<div style="margin-top:8px"><button class="btn" onclick="likePost('${c.id}')">Like</button></div>
-</div>
-</div>
-`).join('');
-}
-renderFeed();
-
-root.querySelector('#postForm').addEventListener('submit', (e)=>{
-e.preventDefault();
-const user = root.querySelector('#postUser').value.trim() || 'Anon';
-const img = root.querySelector('#postImg').value.trim() || 'https://images.unsplash.com/photo-1546525848-3ce03ca516f6?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=7a9b4a317b6d7f3e';
-const text = root.querySelector('#postText').value.trim();
-const post = {id: uid('c'), user, img, text, time: Date.now()};
-state.community.push(post);
-saveData(state);
-renderFeed();
-root.querySelector('#postForm').reset();
-alert('Posted to ReCommunity!');
-});
+    root.querySelector('#postForm').addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const user = root.querySelector('#postUser').value.trim() || 'Anon';
+        // FIXED: Placeholder image now uses the correct GitHub Pages path
+        const img = root.querySelector('#postImg').value.trim() || '/ReVogue-sustainable/assets/images/default_user.png';
+        const text = root.querySelector('#postText').value.trim();
+        const post = {id: uid('c'), user, img, text, time: Date.now()};
+        state.community.push(post);
+        saveData(state);
+        renderFeed();
+        root.querySelector('#postForm').reset();
+        alert('Posted to ReCommunity!');
+    });
 }
 
 function likePost(id){
-alert('Nice! You liked post ' + id);
+    alert('Nice! You liked post ' + id);
 }
 
 /* ---------- Tips ---------- */
 function renderTips(root){
-root.innerHTML = `
-<div class="card">
-<h3>Clothing Care Tips</h3>
-<div class="muted">Search or browse tips for prolonging clothes life. Premium tips are unlocked in the Redeem section.</div>
-<div style="margin-top:8px" class="search">
-<input type="text" id="tipSearch" placeholder="Search tips (e.g. wash, mending)" />
-<button class="btn" id="tipNew">Add Tip</button>
-</div>
-</div>
+    root.innerHTML = `
+        <div class="card">
+            <h3>Clothing Care Tips</h3>
+            <div class="muted">Search or browse tips for prolonging clothes life. Premium tips are unlocked in the Redeem section.</div>
+            <div style="margin-top:8px" class="search">
+                <input type="text" id="tipSearch" placeholder="Search tips (e.g. wash, mending)" />
+                <button class="btn" id="tipNew">Add Tip</button>
+            </div>
+        </div>
+        
+        <div style="margin-top:12px" class="card">
+            <h4>Tips library</h4>
+            <ul class="tips-list" id="tipsList" style="margin-top:8px"></ul>
+        </div>
+    `;
 
-<div style="margin-top:12px" class="card">
-<h4>Tips library</h4>
-<ul class="tips-list" id="tipsList" style="margin-top:8px"></ul>
-</div>
-`;
+    const list = root.querySelector('#tipsList');
+    function renderList(filter=''){
+        const tips = state.tips.filter(t=> t.title.toLowerCase().includes(filter) || t.body.toLowerCase().includes(filter));
+        list.innerHTML = tips.map(t=>`<li><strong>${t.title}</strong> — <span class="muted">${t.body}</span></li>`).join('');
+    }
+    renderList();
 
-const list = root.querySelector('#tipsList');
-function renderList(filter=''){
-const tips = state.tips.filter(t=> t.title.toLowerCase().includes(filter) || t.body.toLowerCase().includes(filter));
-list.innerHTML = tips.map(t=>`<li><strong>${t.title}</strong> — <span class="muted">${t.body}</span></li>`).join('');
-}
-renderList();
-
-root.querySelector('#tipSearch').addEventListener('input', (e)=> renderList(e.target.value.trim().toLowerCase()));
-root.querySelector('#tipNew').addEventListener('click', ()=>{
-const title = prompt('Tip title:');
-if(!title) return;
-const body = prompt('Tip body:');
-state.tips.push({id: uid('t'), title, body});
-saveData(state); render();
-});
+    root.querySelector('#tipSearch').addEventListener('input', (e)=> renderList(e.target.value.trim().toLowerCase()));
+    root.querySelector('#tipNew').addEventListener('click', ()=>{
+        const title = prompt('Tip title:');
+        if(!title) return;
+        const body = prompt('Tip body:');
+        state.tips.push({id: uid('t'), title, body});
+        saveData(state); render();
+    });
 }
 
 /* ---------- About ---------- */
 function renderAbout(root){
-root.innerHTML = `
-<div class="card">
-<h3>About ReVogue</h3>
-<p class="muted">ReVogue is a platform showcasing a circular fashion experience: resale, refurbishment, subscription care, and community. The goal is to reduce waste, extend garment life, and support ethical production.</p>
-<h4 style="margin-top:12px">Key Features</h4>
-<ul class="muted">
-<li>Life Meter — shows garment cycles and sustainability score.</li>
-<li>Refurbish Requests — doorstep pickup & repairs with a Visual Tracker on the Dashboard).</li>
-<li>ReCare Subscription — monthly care with repairs & discounts.</li>
-<li>ReBox Tiers — curated seasonal boxes on monthly, quarterly, or yearly basis.</li>
-<li>Fabric Story Tags — origin, material, and footprint info.</li>
-<li>RePoints — rewards for sustainable choices and engagement, spendable in the Redeem Center.</li>
-</ul>
-<div style="margin-top:12px;display:flex;gap:8px">
-<button class="btn primary" onclick="routeTo('shop')">See Shop</button>
-<button class="btn" onclick="routeTo('dashboard')">Impact Dashboard</button>
-</div>
-</div>
-`;
+    root.innerHTML = `
+        <div class="card">
+            <h3>About ReVogue</h3>
+            <p class="muted">ReVogue is a platform showcasing a circular fashion experience: resale, refurbishment, subscription care, and community. The goal is to reduce waste, extend garment life, and support ethical production.</p>
+            <h4 style="margin-top:12px">Key Features</h4>
+            <ul class="muted">
+                <li>Life Meter — shows garment cycles and sustainability score.</li>
+                <li>Refurbish Requests — doorstep pickup & repairs with a Visual Tracker on the Dashboard).</li>
+                <li>ReCare Subscription — monthly care with repairs & discounts.</li>
+                <li>ReBox Tiers — curated seasonal boxes on monthly, quarterly, or yearly basis.</li>
+                <li>Fabric Story Tags — origin, material, and footprint info.</li>
+                <li>RePoints — rewards for sustainable choices and engagement, spendable in the Redeem Center.</li>
+            </ul>
+            <div style="margin-top:12px;display:flex;gap:8px">
+                <button class="btn primary" onclick="routeTo('shop')">See Shop</button>
+                <button class="btn" onclick="routeTo('dashboard')">Impact Dashboard</button>
+            </div>
+        </div>
+    `;
 }
 
 /* ---------- Product / Refurb flows ---------- */
 function openDetail(id){
-const p = state.products.find(x=>x.id===id);
-if(!p) return alert('Not found');
-const html = `
-<div class="card modal-content">
-<div style="display:flex;gap:20px">
-<div style="width:200px;height:200px;background-image:url('${p.img}');background-size:cover;background-position:center;border-radius:12px;flex-shrink:0;"></div>
-<div style="flex:1">
-<h3>${p.title}</h3>
-<div class="muted" style="margin-top:-10px">${p.fabric}</div>
-<div style="margin-top:10px" class="price">${formatPrice(p.price)}</div>
-<div style="margin-top:10px">
-<div class="small-muted">Life Remaining: <strong style="color:var(--accent-2);">${p.life}%</strong></div>
-<div class="life-meter"><i style="width:${p.life}%"></i></div>
-</div>
-</div>
-</div>
-
-<h4 style="margin-top:15px">Sustainability Footprint</h4>
-<div class="grid cols-3" style="font-weight:700">
-    <div>${p.cycles} cycles</div>
-    <div>${p.saved_water_liters} L Water Saved</div>
-    <div>${p.co2_saved_kg} kg CO₂ Offset</div>
-</div>
-
-<h4 style="margin-top:15px">Care Instructions</h4>
-<div class="muted">${p.care || 'No specific care instructions provided.'}</div>
-
-
-<div style="margin-top:20px;display:flex;gap:8px">
-<button class="btn primary" onclick="addToWardrobe('${p.id}'); closeModal();">Add to Wardrobe</button>
-<button class="btn" onclick="openRefurbForm('${p.id}'); closeModal();">Refurbish</button>
-<button class="btn" onclick="closeModal()">Close</button>
-</div>
-</div>
-`;
-showModal(html);
+    const p = state.products.find(x=>x.id===id);
+    if(!p) return alert('Not found');
+    const html = `
+        <div class="card modal-content">
+            <div style="display:flex;gap:20px">
+                <div style="width:200px;height:200px;background-image:url('${p.img}');background-size:cover;background-position:center;border-radius:12px;flex-shrink:0;"></div>
+                <div style="flex:1">
+                    <h3>${p.title}</h3>
+                    <div class="muted" style="margin-top:-10px">${p.fabric}</div>
+                    <div style="margin-top:10px" class="price">${formatPrice(p.price)}</div>
+                    <div style="margin-top:10px">
+                        <div class="small-muted">Life Remaining: <strong style="color:var(--accent-2);">${p.life}%</strong></div>
+                        <div class="life-meter"><i style="width:${p.life}%"></i></div>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 style="margin-top:15px">Sustainability Footprint</h4>
+            <div class="grid cols-3" style="font-weight:700">
+                 <div>${p.cycles} cycles</div>
+                 <div>${p.saved_water_liters} L Water Saved</div>
+                 <div>${p.co2_saved_kg} kg CO₂ Offset</div>
+            </div>
+            
+            <h4 style="margin-top:15px">Care Instructions</h4>
+            <div class="muted">${p.care || 'No specific care instructions provided.'}</div>
+            
+            
+            <div style="margin-top:20px;display:flex;gap:8px">
+                <button class="btn primary" onclick="addToWardrobe('${p.id}'); closeModal();">Add to Wardrobe</button>
+                <button class="btn" onclick="openRefurbForm('${p.id}'); closeModal();">Refurbish</button>
+                <button class="btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    `;
+    showModal(html);
 }
 
 function openRefurbForm(itemId, itemObj){
-const item = itemObj || state.products.find(x=>x.id===itemId) || state.wardrobe.find(x=>x.id===itemId) || {title:'Custom item'};
-const html = `
-<div class="card modal-content">
-<h3>Refurbish Request — ${item.title}</h3>
-<div class="muted">Choose what you need: mend, recolor, restyle or upcycle. Submitting will advance your refurbishment goal.</div>
-<form id="refurbForm">
-<label>Service type</label>
-<select id="refurbType">
-<option value="mend">Mend a tear</option>
-<option value="restitch">Restitch / Replace Zipper</option>
-<option value="re-dye">Re-dye / Recolor</option>
-<option value="upcycle">Upcycle into accessory</option>
-<option value="full-restyle">Full restyle</option>
-</select>
-<label>Notes</label>
-<textarea id="refurbNote" rows="3" placeholder="Describe condition, size, color, timeline"></textarea>
-<div style="margin-top:8px;display:flex;gap:8px">
-<button class="btn primary" type="submit">Send Request</button>
-<button class="btn" type="button" onclick="closeModal()">Cancel</button>
-</div>
-</form>
-</div>
-`;
-showModal(html);
-document.getElementById('refurbForm').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const type = document.getElementById('refurbType').value;
-    const note = document.getElementById('refurbNote').value.trim();
-    
-    // Add new request
-    state.refurbRequests.push({id:uid('r'), itemId:item.id, itemTitle:item.title, type, note, when: Date.now(), status:'Requested', statusIndex:0});
-    
-    // Update Goals and RePoints
-    state.rePoints += 50; 
-    state.goals.refurbGoal.current++;
-    
-    saveData(state);
-    closeModal();
-    alert('Refurbish request sent for ' + item.title + '. You earned 50 RePoints and advanced your goal!');
-    render();
-});
+    const item = itemObj || state.products.find(x=>x.id===itemId) || state.wardrobe.find(x=>x.id===itemId) || {title:'Custom item'};
+    const html = `
+        <div class="card modal-content">
+            <h3>Refurbish Request — ${item.title}</h3>
+            <div class="muted">Choose what you need: mend, recolor, restyle or upcycle. Submitting will advance your refurbishment goal.</div>
+            <form id="refurbForm">
+                <label>Service type</label>
+                <select id="refurbType">
+                    <option value="mend">Mend a tear</option>
+                    <option value="restitch">Restitch / Replace Zipper</option>
+                    <option value="re-dye">Re-dye / Recolor</option>
+                    <option value="upcycle">Upcycle into accessory</option>
+                    <option value="full-restyle">Full restyle</option>
+                </select>
+                <label>Notes</label>
+                <textarea id="refurbNote" rows="3" placeholder="Describe condition, size, color, timeline"></textarea>
+                <div style="margin-top:8px;display:flex;gap:8px">
+                    <button class="btn primary" type="submit">Send Request</button>
+                    <button class="btn" type="button" onclick="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    `;
+    showModal(html);
+    document.getElementById('refurbForm').addEventListener('submit', (e)=>{
+         e.preventDefault();
+         const type = document.getElementById('refurbType').value;
+         const note = document.getElementById('refurbNote').value.trim();
+
+         // Add new request
+         state.refurbRequests.push({id:uid('r'), itemId:item.id, itemTitle:item.title, type, note, when: Date.now(), status:'Requested', statusIndex:0});
+
+         // Update Goals and RePoints
+         state.rePoints += 50;
+         state.goals.refurbGoal.current++;
+
+         saveData(state);
+         closeModal();
+         alert('Refurbish request sent for ' + item.title + '. You earned 50 RePoints and advanced your goal!');
+         render();
+    });
 }
 
 /* ---------- Modal Logic (Minimal) ---------- */
@@ -1262,11 +921,6 @@ function closeModal(){
 // Initial render
 render();
 </script>
-</body>
-</html>
-
-
-
 </body>
 </html>
 
