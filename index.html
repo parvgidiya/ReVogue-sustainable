@@ -374,7 +374,6 @@ function renderHome(root) {
     `).join('');
 }
 
-
 /* ---------- Shop ---------- */
 function renderShop(root) {
     root.innerHTML = `
@@ -917,11 +916,15 @@ function closeModal(){
     if(modal) modal.style.display = 'none';
 }
 
+// FIX: This listener is REQUIRED for header navigation links to work after hash change
+window.addEventListener('hashchange', render);
+
 // Initial render
 render();
 </script>
 </body>
 </html>
+
 
 
 
