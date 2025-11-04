@@ -182,7 +182,7 @@ const sampleProducts = [
 ];
 
 const REBOX_TIERS = [
- // FIXED: ReBox image path corrected (assuming 'rebox.jpg' is used for all)
+ // FIXED: ReBox image path corrected
  {id:'rb1', title:'Monthly ReBox', price:45, frequency:'Monthly', points:50, img:'/ReVogue-sustainable/assets/images/rebox.jpg', note:'Curated selection of items ready for sale/upcycle.'},
  {id:'rb2', title:'Quarterly ReBox', price:120, frequency:'Quarterly', points:150, img:'/ReVogue-sustainable/assets/images/rebox.jpg', note:'Curated selection of items ready for sale/upcycle.'},
  {id:'rb3', title:'Yearly ReBox', price:450, frequency:'Yearly', points:600, img:'/ReVogue-sustainable/assets/images/rebox.jpg', note:'Curated selection of items ready for sale/upcycle.'},
@@ -218,10 +218,6 @@ const initialData = {
     subscriptions: []
 };
 
-// --- REST OF THE JAVASCRIPT CODE REMAINS HERE ---
-
-// Helper functions for various pages (keeping logic minimal)
-
 function uid(prefix = 'id') {
     return prefix + Math.random().toString(36).substring(2, 9);
 }
@@ -245,7 +241,7 @@ let state = loadData();
 
 // Helper functions for rendering and routing
 function formatPrice(price) {
-    return `₹${price}`; // Assuming Indian Rupees based on context, adjust if needed
+    return `₹${price}`; // Assuming Indian Rupees
 }
 
 function humanTime(timestamp) {
@@ -288,6 +284,7 @@ function render() {
 
     // Ensure the current route is valid, default to home
     const currentRoute = ROUTES.includes(route) ? route : 'home';
+    // FIX: Removed recursive routeTo call that caused the infinite loop
 
     appMain.innerHTML = '';
     
@@ -373,6 +370,7 @@ function renderHome(root) {
         </div>
     `).join('');
 }
+
 
 /* ---------- Shop ---------- */
 function renderShop(root) {
@@ -498,6 +496,87 @@ function removeItem(id){
     }
 }
 
+function openRefurbForm(itemId, item = null) {
+    item = item || state.wardrobe.find(x => x.id === itemId);
+    if (!item) {
+        alert("Item not found in wardrobe.");
+        return;
+    }
+    
+    const isNewItem = itemId.startsWith('new');
+    const title = isNewItem ? 'Add New Item' : `Refurbish ${item.title}`;
+    
+    const formHtml = `
+        <h3>${title}</h3>
+        <p class="muted">${isNewItem ? 'Enter details for a non-marketplace item.' : 'Request professional refurbishment services.'}</p>
+        
+        <label for="refurbTitle">Item Name</label>
+        <input type="text" id="refurbTitle" value="${item.title}" ${isNewItem ? '' : 'disabled'} required>
+        
+        <label for="refurbService">Service Type</label>
+        <select id="refurbService" required>
+            <option value="repair">Basic Repair (${formatPrice(15)})</option>
+            <option value="upcycle">Full Upcycle/Redesign (${formatPrice(50)})</option>
+            <option value="cleaning">Deep Cleaning (${formatPrice(10)})</option>
+        </select>
+        
+        <label for="refurbNotes">Notes (Damage description or redesign ideas)</label>
+        <textarea id="refurbNotes" rows="4"></textarea>
+
+        <div style="margin-top:20px;display:flex;gap:10px">
+            <button class="btn primary" onclick="submitRefurbRequest('${itemId}', ${isNewItem})">${isNewItem ? 'Add Item' : 'Submit Request'}</button>
+            <button class="btn secondary" onclick="closeModal()">Cancel</button>
+        </div>
+    `;
+    showModal(formHtml);
+}
+
+function submitRefurbRequest(itemId, isNewItem) {
+    const title = document.getElementById('refurbTitle').value;
+    const service = document.getElementById('refurbService').value;
+    const notes = document.getElementById('refurbNotes').value;
+
+    if (isNewItem) {
+        state.wardrobe.push({
+            id: uid('p'),
+            title: title,
+            price: 0, 
+            img: '/ReVogue-sustainable/assets/images/placeholder.jpg', 
+            life: 100, 
+            cycles: 0,
+            worn: 0,
+            fabric: 'User Added Item',
+            saved_water_liters: 0,
+            co2_saved_kg: 0,
+            care: 'N/A'
+        });
+        alert(`${title} added to your wardrobe!`);
+    } else {
+        const item = state.wardrobe.find(x => x.id === itemId);
+        if (item) {
+            state.refurbRequests.push({
+                id: uid('r'),
+                itemId: itemId,
+                itemTitle: item.title,
+                service: service,
+                notes: notes,
+                timestamp: Date.now(),
+                status: 'Requested',
+                statusIndex: 1
+            });
+            state.goals.refurbGoal.current = state.refurbRequests.length;
+            if(state.refurbRequests.length >= state.goals.refurbGoal.target) {
+                 state.rePoints += state.goals.refurbGoal.reward;
+                 alert(`Goal Complete! Earned ${state.goals.refurbGoal.reward} RePoints!`);
+            }
+            alert(`Refurbishment request for ${title} submitted!`);
+        }
+    }
+    saveData(state);
+    closeModal();
+    render();
+}
+
 
 /* ---------- ReBox ---------- */
 function renderReBox(root) {
@@ -574,13 +653,13 @@ function renderDashboard(root) {
         
         <div class="grid cols-3">
             <div class="card">
-                <h4>Total Wardrobe Impact</h4>
+                <h4>Total Wardrobe Impact (Carbon Footprint/WaterCalc)</h4>
                 <div class="kpi"><span class="val">${totalWorn}</span> Total Wears</div>
                 <div class="kpi" style="margin-top:8px"><span class="val">${totalWaterSaved} L</span> Water Saved</div>
                 <div class="kpi" style="margin-top:8px"><span class="val">${totalCO2Saved} kg</span> CO₂ Offset</div>
             </div>
             <div class="card" style="grid-column: span 2">
-                <h4>Refurbishment Tracker</h4>
+                <h4>Refurbishment Tracker (Refurb Requests)</h4>
                 <div class="muted">Last Request: <strong>${state.refurbRequests[state.refurbRequests.length-1]?.itemTitle || 'None'}</strong> | Status: <strong>${state.refurbRequests[state.refurbRequests.length-1]?.status || 'N/A'}</strong></div>
                 
                 <div class="tracker-container">
@@ -634,19 +713,15 @@ function advanceTracker() {
     }
     const req = state.refurbRequests[state.refurbRequests.length-1];
     
-    if(req.statusIndex < 3){
+    if(req.statusIndex < 4){
         req.statusIndex++;
         const statuses = ['Requested', 'In Progress', 'Quality Check', 'Shipped Back'];
-        req.status = statuses[req.statusIndex];
-        
-        if(req.status === 'Shipped Back'){
-            state.rePoints += 100; // Bonus for completion
-            alert(`Refurbishment complete for ${req.itemTitle}! Earned 100 bonus RePoints.`);
-        }
+        req.status = statuses[req.statusIndex - 1];
+        alert(`Refurbish Request Status updated to: ${req.status}`);
+        saveData(state);
     } else {
-        alert('Item has already shipped back.');
+        alert('Request already Shipped Back.');
     }
-    saveData(state);
     render();
 }
 
@@ -654,258 +729,130 @@ function advanceTracker() {
 function renderRedeem(root) {
     root.innerHTML = `
         <div class="card">
-            <h3>Redeem RePoints ⭐</h3>
-            <div class="muted">Spend your RePoints on exclusive discounts, premium content, or services.</div>
+            <h3>Redeem RePoints (<span id="rePointsCount"></span> ⭐)</h3>
+            <div class="muted">Use your earned RePoints to get vouchers, exclusive items, or subscriptions (ReCreate Sub).</div>
         </div>
-        
+
         <div style="margin-top:12px" class="grid cols-3">
             <div class="card">
-                <h4>20% Off Refurbishment</h4>
-                <div class="small-muted">One-time use coupon.</div>
-                <div class="price" style="margin-top:8px">150 RePoints</div>
-                <div style="margin-top:10px"><button class="btn primary" onclick="redeem('refurb_20', 150)">Redeem</button></div>
+                <h4>50% Off Voucher</h4>
+                <div class="muted">A half-price voucher for any item in the Shop.</div>
+                <div class="price" style="color:var(--accent);margin-top:10px">1000 RePoints</div>
+                <button class="btn primary" style="margin-top:10px" disabled>Redeem</button>
             </div>
             <div class="card">
-                <h4>Premium Care Tips</h4>
-                <div class="small-muted">Unlock advanced garment mending and spot-cleaning tutorials.</div>
-                <div class="price" style="margin-top:8px">300 RePoints</div>
-                <div style="margin-top:10px"><button class="btn primary" onclick="redeem('premium_tips', 300)">Redeem</button></div>
+                <h4>ReCreate Subscription</h4>
+                <div class="muted">Unlock exclusive upcycling templates and materials monthly.</div>
+                <div class="price" style="color:var(--accent);margin-top:10px">500 RePoints</div>
+                <button class="btn primary" style="margin-top:10px" disabled>Redeem</button>
             </div>
             <div class="card">
-                <h4>Free Shipping</h4>
-                <div class="small-muted">Free shipping on your next shop order.</div>
-                <div class="price" style="margin-top:8px">80 RePoints</div>
-                <div style="margin-top:10px"><button class="btn primary" onclick="redeem('free_ship', 80)">Redeem</button></div>
+                <h4>Charity Donation</h4>
+                <div class="muted">Donate 500 points to our sustainable partner foundation.</div>
+                <div class="price" style="color:var(--accent);margin-top:10px">500 RePoints</div>
+                <button class="btn primary" style="margin-top:10px" disabled>Redeem</button>
             </div>
         </div>
     `;
 }
-
-function redeem(itemId, cost){
-    if(state.rePoints >= cost){
-        state.rePoints -= cost;
-        saveData(state);
-        alert(`Redeemed ${cost} RePoints for ${itemId}! Check your email for the code.`);
-    } else {
-        alert(`You need ${cost - state.rePoints} more RePoints to redeem this item.`);
-    }
-    render();
-}
-
 
 /* ---------- Community ---------- */
 function renderCommunity(root) {
     root.innerHTML = `
         <div class="card">
-            <h3>ReCommunity Feed</h3>
-            <div class="muted">Share your refurbish projects, sustainable outfits, and connect with other ReVogue users.</div>
-            
-            <form id="postForm" style="margin-top:12px" class="card">
-                <div class="form-row">
-                    <div style="flex:1">
-                        <label>Name</label>
-                        <input type="text" id="postUser" placeholder="Your name" required />
-                    </div>
-                    <div style="flex:1">
-                        <label>Image URL (optional)</label>
-                        <input type="text" id="postImg" placeholder="Image URL (optional)" />
-                    </div>
-                </div>
-                <label>Post</label>
-                <textarea id="postText" rows="3" placeholder="Share your refurbish story or photo"></textarea>
-                <div style="margin-top:8px;display:flex;gap:8px">
-                    <button class="btn primary" type="submit">Post</button>
-                    <button class="btn" type="button" onclick="routeTo('home')">Back</button>
-                </div>
-            </form>
-        </div>
-
-        <div style="margin-top:12px" id="feed"></div>
-    `;
-
-    const feed = root.querySelector('#feed');
-    function renderFeed(){
-        feed.innerHTML = state.community.slice().reverse().map(c=>`
-            <div class="card community-post" style="display:flex;gap:12px;margin-bottom:10px">
-                <img src="${c.img || '/ReVogue-sustainable/assets/images/default_user.png'}" />
-                <div style="flex:1">
-                    <div style="font-weight:900">${c.user} <span class="small-muted">· ${humanTime(c.time)} ago</span></div>
-                    <div class="muted" style="margin-top:6px">${c.text}</div>
-                    <div style="margin-top:8px"><button class="btn" onclick="likePost('${c.id}')">Like</button></div>
-                </div>
-            </div>
-        `).join('');
-    }
-    renderFeed();
-
-    root.querySelector('#postForm').addEventListener('submit', (e)=>{
-        e.preventDefault();
-        const user = root.querySelector('#postUser').value.trim() || 'Anon';
-        // FIXED: Placeholder image now uses the correct GitHub Pages path
-        const img = root.querySelector('#postImg').value.trim() || '/ReVogue-sustainable/assets/images/default_user.png';
-        const text = root.querySelector('#postText').value.trim();
-        const post = {id: uid('c'), user, img, text, time: Date.now()};
-        state.community.push(post);
-        saveData(state);
-        renderFeed();
-        root.querySelector('#postForm').reset();
-        alert('Posted to ReCommunity!');
-    });
-}
-
-function likePost(id){
-    alert('Nice! You liked post ' + id);
-}
-
-/* ---------- Tips ---------- */
-function renderTips(root){
-    root.innerHTML = `
-        <div class="card">
-            <h3>Clothing Care Tips</h3>
-            <div class="muted">Search or browse tips for prolonging clothes life. Premium tips are unlocked in the Redeem section.</div>
-            <div style="margin-top:8px" class="search">
-                <input type="text" id="tipSearch" placeholder="Search tips (e.g. wash, mending)" />
-                <button class="btn" id="tipNew">Add Tip</button>
+            <h3>Community Feed</h3>
+            <div class="muted">Share your style and see recent posts.</div>
+            <div style="margin-top:10px">
+                <textarea id="newPost" placeholder="Share your sustainable style or a repair tip..." rows="3"></textarea>
+                <button class="btn primary" style="margin-top:8px" onclick="postToCommunity()">Post</button>
             </div>
         </div>
         
-        <div style="margin-top:12px" class="card">
-            <h4>Tips library</h4>
-            <ul class="tips-list" id="tipsList" style="margin-top:8px"></ul>
+        <div style="margin-top:12px" id="communityFeed">
+            ${state.community.length === 0 ? '<div class="card">No posts yet. Be the first to share!</div>' : state.community.map(p => `
+                <div class="card" style="margin-bottom:10px">
+                    <div class="small-muted">Posted ${humanTime(p.timestamp)} ago</div>
+                    <p style="margin-top:5px">${p.content}</p>
+                </div>
+            `).join('')}
         </div>
     `;
+}
 
-    const list = root.querySelector('#tipsList');
-    function renderList(filter=''){
-        const tips = state.tips.filter(t=> t.title.toLowerCase().includes(filter) || t.body.toLowerCase().includes(filter));
-        list.innerHTML = tips.map(t=>`<li><strong>${t.title}</strong> — <span class="muted">${t.body}</span></li>`).join('');
+function postToCommunity() {
+    const content = document.getElementById('newPost').value.trim();
+    if (content) {
+        state.community.unshift({ id: uid('cm'), content: content, timestamp: Date.now() });
+        saveData(state);
+        document.getElementById('newPost').value = '';
+        render();
     }
-    renderList();
+}
 
-    root.querySelector('#tipSearch').addEventListener('input', (e)=> renderList(e.target.value.trim().toLowerCase()));
-    root.querySelector('#tipNew').addEventListener('click', ()=>{
-        const title = prompt('Tip title:');
-        if(!title) return;
-        const body = prompt('Tip body:');
-        state.tips.push({id: uid('t'), title, body});
-        saveData(state); render();
-    });
+
+/* ---------- Tips ---------- */
+function renderTips(root) {
+    root.innerHTML = `
+        <div class="card">
+            <h3>Sustainability Tips</h3>
+            <div class="muted">Quick guides to extend the life of your clothes and reduce your impact.</div>
+        </div>
+        <div style="margin-top:12px">
+            ${state.tips.map(t => `
+                <div class="card" style="margin-bottom:10px">
+                    <h4>${t.title}</h4>
+                    <p class="muted">${t.body}</p>
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
 
 /* ---------- About ---------- */
-function renderAbout(root){
+function renderAbout(root) {
     root.innerHTML = `
         <div class="card">
             <h3>About ReVogue</h3>
-            <p class="muted">ReVogue is a platform showcasing a circular fashion experience: resale, refurbishment, subscription care, and community. The goal is to reduce waste, extend garment life, and support ethical production.</p>
-            <h4 style="margin-top:12px">Key Features</h4>
-            <ul class="muted">
-                <li>Life Meter — shows garment cycles and sustainability score.</li>
-                <li>Refurbish Requests — doorstep pickup & repairs with a Visual Tracker on the Dashboard).</li>
-                <li>ReCare Subscription — monthly care with repairs & discounts.</li>
-                <li>ReBox Tiers — curated seasonal boxes on monthly, quarterly, or yearly basis.</li>
-                <li>Fabric Story Tags — origin, material, and footprint info.</li>
-                <li>RePoints — rewards for sustainable choices and engagement, spendable in the Redeem Center.</li>
-            </ul>
-            <div style="margin-top:12px;display:flex;gap:8px">
-                <button class="btn primary" onclick="routeTo('shop')">See Shop</button>
-                <button class="btn" onclick="routeTo('dashboard')">Impact Dashboard</button>
-            </div>
+            <p>ReVogue is a platform dedicated to circular fashion. We believe in extending the life of every garment through buying second-hand, refurbishment, and conscious use.</p>
+            <p style="margin-top:10px">Our mission is to reduce textile waste and promote sustainable consumption habits.</p>
         </div>
     `;
 }
 
-/* ---------- Product / Refurb flows ---------- */
-function openDetail(id){
-    const p = state.products.find(x=>x.id===id);
-    if(!p) return alert('Not found');
-    const html = `
-        <div class="card modal-content">
-            <div style="display:flex;gap:20px">
-                <div style="width:200px;height:200px;background-image:url('${p.img}');background-size:cover;background-position:center;border-radius:12px;flex-shrink:0;"></div>
-                <div style="flex:1">
-                    <h3>${p.title}</h3>
-                    <div class="muted" style="margin-top:-10px">${p.fabric}</div>
-                    <div style="margin-top:10px" class="price">${formatPrice(p.price)}</div>
-                    <div style="margin-top:10px">
-                        <div class="small-muted">Life Remaining: <strong style="color:var(--accent-2);">${p.life}%</strong></div>
-                        <div class="life-meter"><i style="width:${p.life}%"></i></div>
-                    </div>
-                </div>
-            </div>
-            
-            <h4 style="margin-top:15px">Sustainability Footprint</h4>
-            <div class="grid cols-3" style="font-weight:700">
-                 <div>${p.cycles} cycles</div>
-                 <div>${p.saved_water_liters} L Water Saved</div>
-                 <div>${p.co2_saved_kg} kg CO₂ Offset</div>
-            </div>
-            
-            <h4 style="margin-top:15px">Care Instructions</h4>
-            <div class="muted">${p.care || 'No specific care instructions provided.'}</div>
-            
-            
-            <div style="margin-top:20px;display:flex;gap:8px">
-                <button class="btn primary" onclick="addToWardrobe('${p.id}'); closeModal();">Add to Wardrobe</button>
-                <button class="btn" onclick="openRefurbForm('${p.id}'); closeModal();">Refurbish</button>
-                <button class="btn" onclick="closeModal()">Close</button>
-            </div>
+/* ---------- Product Detail Modal & Logic ---------- */
+function openDetail(id) {
+    const p = state.products.find(x => x.id === id);
+    if (!p) return;
+
+    const modalContent = `
+        <div class="space-between">
+            <h2>${p.title}</h2>
+            <div class="price">${formatPrice(p.price)}</div>
+        </div>
+        <div style="margin-top:10px">
+            <div style="background-image:url('${p.img}');height:200px;background-size:cover;background-position:center;border-radius:8px;"></div>
+        </div>
+        
+        <h4 style="margin-top:15px">Fabric Story (Sustainability Impact)</h4>
+        <p class="muted">${p.fabric}</p>
+        <p class="small-muted">Water Saved: ${p.saved_water_liters}L | CO₂ Offset: ${p.co2_saved_kg}kg | Wear Cycles Remaining: ${p.life}</p>
+        
+        <h4 style="margin-top:15px">Care Instructions</h4>
+        <p class="muted">${p.care}</p>
+
+        <div style="margin-top:20px;display:flex;gap:10px">
+            <button class="btn primary" onclick="addToWardrobe('${p.id}');closeModal()">Buy & Track</button>
+            <button class="btn secondary" onclick="closeModal()">Close</button>
         </div>
     `;
-    showModal(html);
+    showModal(modalContent);
 }
 
-function openRefurbForm(itemId, itemObj){
-    const item = itemObj || state.products.find(x=>x.id===itemId) || state.wardrobe.find(x=>x.id===itemId) || {title:'Custom item'};
-    const html = `
-        <div class="card modal-content">
-            <h3>Refurbish Request — ${item.title}</h3>
-            <div class="muted">Choose what you need: mend, recolor, restyle or upcycle. Submitting will advance your refurbishment goal.</div>
-            <form id="refurbForm">
-                <label>Service type</label>
-                <select id="refurbType">
-                    <option value="mend">Mend a tear</option>
-                    <option value="restitch">Restitch / Replace Zipper</option>
-                    <option value="re-dye">Re-dye / Recolor</option>
-                    <option value="upcycle">Upcycle into accessory</option>
-                    <option value="full-restyle">Full restyle</option>
-                </select>
-                <label>Notes</label>
-                <textarea id="refurbNote" rows="3" placeholder="Describe condition, size, color, timeline"></textarea>
-                <div style="margin-top:8px;display:flex;gap:8px">
-                    <button class="btn primary" type="submit">Send Request</button>
-                    <button class="btn" type="button" onclick="closeModal()">Cancel</button>
-                </div>
-            </form>
-        </div>
-    `;
-    showModal(html);
-    document.getElementById('refurbForm').addEventListener('submit', (e)=>{
-         e.preventDefault();
-         const type = document.getElementById('refurbType').value;
-         const note = document.getElementById('refurbNote').value.trim();
-
-         // Add new request
-         state.refurbRequests.push({id:uid('r'), itemId:item.id, itemTitle:item.title, type, note, when: Date.now(), status:'Requested', statusIndex:0});
-
-         // Update Goals and RePoints
-         state.rePoints += 50;
-         state.goals.refurbGoal.current++;
-
-         saveData(state);
-         closeModal();
-         alert('Refurbish request sent for ' + item.title + '. You earned 50 RePoints and advanced your goal!');
-         render();
-    });
-}
-
-/* ---------- Modal Logic (Minimal) ---------- */
 function showModal(content){
     let overlay = document.getElementById('modalOverlay');
     if(!overlay){
         overlay = document.createElement('div');
         overlay.id = 'modalOverlay';
-        // Styles are in CSS block now
         document.body.appendChild(overlay);
     }
     overlay.innerHTML = `<div class="modal-content">${content}</div>`;
@@ -916,6 +863,7 @@ function closeModal(){
     if(modal) modal.style.display = 'none';
 }
 
+
 // FIX: This listener is REQUIRED for header navigation links to work after hash change
 window.addEventListener('hashchange', render);
 
@@ -924,6 +872,7 @@ render();
 </script>
 </body>
 </html>
+
 
 
 
